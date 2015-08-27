@@ -40,6 +40,14 @@ public:
 
     // attributi fisici e visivi
 
+    // maschera di collisione: i primi due valori sono naturalmente la coordinata
+    // in pixel dell'angolo in alto a sinistra relativamente ai contorni del
+    // fotogramma, gli altri sono le dimensioni;
+    // con i valori "-1" la maschera è disattivata e sarà come impostare la maschera
+    // a tutto il frame
+
+    SDL_Rect collision_mask {-1, -1, 0, 0};
+
     // depht: indica il livello dello sprite rispetto agli altri.
     // Valori più bassi indicano che lo sprite sarà in primo piano rispetto agli
     // sprite con valori più alti

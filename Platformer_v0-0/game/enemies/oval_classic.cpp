@@ -9,11 +9,17 @@ constexpr int speed = 1;
 constexpr float grav_accel = 0.05f;
 constexpr float grav_limit = 5.0f;
 
+constexpr int col_mask_x = 1;
+constexpr int col_mask_y = 15;
+constexpr int col_mask_w = 30;
+constexpr int col_mask_h = 27;
+
 void oval_classic::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/enemy_classic.png", 3);
+    own_sprite = new sprite("res/enemies.png", 8);
     own_sprite->x = x, own_sprite->y = y;
     own_sprite->set_frame(0);
+    own_sprite->collision_mask = {col_mask_x, col_mask_y, col_mask_w, col_mask_h};
     hspeed = -speed;
     gravity_limit = grav_limit;
 }

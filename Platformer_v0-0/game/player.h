@@ -23,7 +23,6 @@ public:
     void update() override;
     void handle_key() override;
     void handle_state() override;
-    void handle_collision(game_instance_generic &other) override;
 
 
     Sample jump_fx;

@@ -43,7 +43,7 @@ public:
     void update();
 
     // controlla una possibile collisione con qualche oggetto a una determinata posizione
-    game_instance_generic* check_collision(const SDL_Rect& me,
+    game_instance_generic* check_collision(const SDL_Rect& at,
                          game_instance_generic *excluded, bool solidness);
 
     void manage_keys() { for(auto* i: this->ins_vec)

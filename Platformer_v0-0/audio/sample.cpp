@@ -35,8 +35,10 @@ Sample::Sample(std::string path)
             channel_used.resize(channel_used.size() + scale_factor);
         channel_used[i] = true;*/
 
-        if((chunk = Mix_LoadWAV(path.c_str())) == nullptr)
+        if((chunk = Mix_LoadWAV(path.c_str())) == nullptr) {
             SDL_Log("Errore in Sample::Sample(): %s\n", Mix_GetError());
+            SDL_Log("Forse manca il file %s\n", path.c_str());
+        }
         else
             used_chunks[path] = chunk;
     }

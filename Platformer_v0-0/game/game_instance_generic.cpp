@@ -12,6 +12,16 @@ void game_instance_generic::_update_kinematic()
     own_sprite->y += vspeed;
 }
 
+bool game_instance_generic::on_floor()
+{
+    return check_collision(own_sprite->x, own_sprite->y+1);
+}
+
+bool game_instance_generic::is_sunk()
+{
+    return check_collision(own_sprite->x, own_sprite->y);
+}
+
 game_instance_generic *game_instance_generic::check_collision(int x, int y, bool solid)
 {
     return current_room->_check_coll(this, x, y, solid);

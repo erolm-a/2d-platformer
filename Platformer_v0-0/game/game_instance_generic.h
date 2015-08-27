@@ -38,9 +38,9 @@ struct game_instance_generic
     game_instance_generic* check_collision(int x, int y, bool must_be_solid=true);
 
     // poggia su un terreno?
-    bool on_floor() {return check_collision(own_sprite->x, own_sprite->y+1);}
+    bool on_floor();
     // è sprofondato?
-    bool is_sunk() {return check_collision(own_sprite->x, own_sprite->y);}
+    bool is_sunk();
 
     // dettagli fisici
     bool solid {false};

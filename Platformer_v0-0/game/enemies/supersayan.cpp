@@ -5,7 +5,8 @@
 void supersayan::spawn(int x, int y)
 {
     oval_classic::spawn(x, y);
-    own_sprite->set_frame(1);
+    own_sprite->set_frame(4);
+    own_sprite->collision_mask = {0, 9, own_sprite->width(), 33};
 }
 
 void supersayan::handle_collision(game_instance_generic &other)

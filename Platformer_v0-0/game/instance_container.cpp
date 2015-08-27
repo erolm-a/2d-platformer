@@ -3,21 +3,54 @@
 #include "instance_container.h"
 #include "game_instance_generic.h"
 #include "gfx/spr_vec.h"
+#include "gfx/sprite.h"
 
 bool check_collision (game_instance_generic* a, game_instance_generic* b)
 {
     sprite& as = *(a->own_sprite);
-    sprite& bs = *(b->own_sprite);
+    sprite& bs = *(b->own_sprite);    
 
-    SDL_Rect A = {as.x, as.y, as.width(), as.height()};
-    SDL_Rect B = {bs.x, bs.y, bs.width(), bs.height()};
+    SDL_Rect A, B;
+
+    // occupiamoci delle maschere di collisione
+
+    if(as.collision_mask.x < 0 || as.collision_mask.y < 0)
+    {
+        A.x = as.x;
+        A.y = as.y;
+        A.w = as.width();
+        A.h = as.height();
+    }
+
+    else
+    {
+        A.x = as.x + as.collision_mask.x;
+        A.y = as.y + as.collision_mask.y;
+        A.w = as.collision_mask.w;
+        A.h = as.collision_mask.h;
+    }
+
+    if(bs.collision_mask.x < 0 || bs.collision_mask.y < 0)
+    {
+        B.x = bs.x;
+        B.y = bs.y;
+        B.w = bs.width();
+        B.h = bs.height();
+    }
+    else
+    {
+        B.x = bs.x + bs.collision_mask.x;
+        B.y = bs.y + bs.collision_mask.y;
+        B.w = bs.collision_mask.w;
+        B.h = bs.collision_mask.h;
+    }
 
     return SDL_HasIntersection(&A, &B);
 }
 void instance_container::update()
 {    
-    for(int i = 0; i < ins_vec.size(); ++i) {
-        for(int j = i + 1; j < ins_vec.size(); ++j) {
+    for(size_t i = 0; i < ins_vec.size(); ++i) {
+        for(size_t j = i + 1; j < ins_vec.size(); ++j) {
 
             if(::check_collision(ins_vec[i], ins_vec[j])) {
                 auto* old_obj = ins_vec[i];
@@ -53,19 +86,28 @@ void instance_container::update()
     }
 }
 
-game_instance_generic *instance_container::check_collision(const SDL_Rect &me,
+game_instance_generic *instance_container::check_collision(const SDL_Rect &at,
                                          game_instance_generic *excluded, bool solidness)
 {
+    struct coll_instance : public game_instance_generic
+    {
+        coll_instance(int x, int y, int w, int h, SDL_Rect mask)
+        {
+            own_sprite = new sprite(x, y, w, h);
+            own_sprite->collision_mask = mask;
+        }
+
+        void spawn(int x, int y) override {(void) x, (void)y;}
+
+    };
+    coll_instance me(at.x, at.y, at.w, at.h, excluded->own_sprite->collision_mask);
+
     for(auto* i: ins_vec)
     {
         if(i == excluded)
             continue;
-        SDL_Rect other {i->own_sprite->x,
-                        i->own_sprite->y,
-                        i->own_sprite->width(),
-                        i->own_sprite->height()};
-        if(SDL_HasIntersection(&me, &other)) // se è avvenuta la collisione
-            if(!solidness || (solidness && i->solid)) // se l'altro oggetto è solido
+        if(::check_collision(&me, i))
+            if(!solidness || i->solid) // controlla che soddisfi i criteri di solidità
                 return i;
     }
     return nullptr;

@@ -153,12 +153,6 @@ void player::handle_state()
     }
 }
 
-void player::handle_collision(game_instance_generic& other)
-{
-    if(collision_with<wall>(other) && other.solid == true)
-        std::cout << other.solid;
-}
-
 void player::set_death()
 {
     stop_walk();
