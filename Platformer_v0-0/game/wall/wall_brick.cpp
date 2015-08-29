@@ -13,7 +13,7 @@ void wall_brick::spawn(int x, int y)
 
     own_sprite->x = x, own_sprite->y = y;
     break_fx = Sample("blockbreak.ogg");
-    break_fx.set_volume(10);
+    //break_fx.set_volume(10);
 }
 
 void wall_brick::update()
