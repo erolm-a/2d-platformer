@@ -42,9 +42,7 @@ class room
     unsigned frame_sleeping {0};
 
     // camera è il rettangolo che rappresenta tutto ciò che si vede;
-    // followed è il puntatore all'oggetto da seguire;
     SDL_Rect camera;
-    game_instance_generic* followed;
 
 public:
     room();
@@ -80,6 +78,9 @@ public:
     Mus_background bgm;
 
     const std::string &title = room_cfg.title;
+
+    // followed è il puntatore all'oggetto da seguire;
+    game_instance_generic* followed;
 };
 
 #endif // ROOM_H

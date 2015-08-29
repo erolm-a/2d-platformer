@@ -10,6 +10,8 @@
 #include "game/wall/wall_coin.h"
 #include "game/enemies/oval_classic.h"
 #include "game/enemies/supersayan.h"
+#include "game/enemies/bad_cloud.h"
+#include "game/enemies/torpedo.h"
 
 using namespace tinyxml2;
 
@@ -66,4 +68,6 @@ void recognize(const XMLElement *pElem, instance_container& ic, game_instance_ge
     REGISTER(wall_coin)
     REGISTER(oval_classic)
     REGISTER(supersayan)
+    REGISTER(bad_cloud)
+    REGISTER(torpedo)
 }

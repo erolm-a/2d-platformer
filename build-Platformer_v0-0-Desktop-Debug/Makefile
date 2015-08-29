@@ -73,7 +73,9 @@ SOURCES       = ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/init/level/recognize_types.cpp \
 		../Platformer_v0-0/game/enemies/oval_classic.cpp \
 		../Platformer_v0-0/game/wall/wall_coin.cpp \
-		../Platformer_v0-0/game/enemies/supersayan.cpp 
+		../Platformer_v0-0/game/enemies/supersayan.cpp \
+		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
+		../Platformer_v0-0/game/enemies/torpedo.cpp 
 OBJECTS       = main.o \
 		init.o \
 		starter.o \
@@ -99,7 +101,9 @@ OBJECTS       = main.o \
 		recognize_types.o \
 		oval_classic.o \
 		wall_coin.o \
-		supersayan.o
+		supersayan.o \
+		bad_cloud.o \
+		torpedo.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -181,7 +185,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		game/wall/wall_brick.h \
 		game/enemies/oval_classic.h \
 		game/wall/wall_coin.h \
-		game/enemies/supersayan.h ../Platformer_v0-0/main.cpp \
+		game/enemies/supersayan.h \
+		game/enemies/bad_cloud.h \
+		game/enemies/torpedo.h ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/init/init.cpp \
 		../Platformer_v0-0/init/starter.cpp \
 		../Platformer_v0-0/gfx/gfx_class.cpp \
@@ -206,7 +212,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Platformer_v0-0/init/level/recognize_types.cpp \
 		../Platformer_v0-0/game/enemies/oval_classic.cpp \
 		../Platformer_v0-0/game/wall/wall_coin.cpp \
-		../Platformer_v0-0/game/enemies/supersayan.cpp
+		../Platformer_v0-0/game/enemies/supersayan.cpp \
+		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
+		../Platformer_v0-0/game/enemies/torpedo.cpp
 QMAKE_TARGET  = Platformer_v0-0
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Platformer_v0-0
@@ -613,7 +621,9 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/game/wall/wall_brick.h \
 		../Platformer_v0-0/game/wall/wall_coin.h \
-		../Platformer_v0-0/game/enemies/oval_classic.h
+		../Platformer_v0-0/game/enemies/oval_classic.h \
+		../Platformer_v0-0/game/enemies/supersayan.h \
+		../Platformer_v0-0/game/enemies/bad_cloud.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recognize_types.o ../Platformer_v0-0/init/level/recognize_types.cpp
 
 oval_classic.o: ../Platformer_v0-0/game/enemies/oval_classic.cpp ../Platformer_v0-0/game/enemies/oval_classic.h \
@@ -653,8 +663,36 @@ supersayan.o: ../Platformer_v0-0/game/enemies/supersayan.cpp ../Platformer_v0-0/
 		../Platformer_v0-0/game/game_instance_generic.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
-		../Platformer_v0-0/gfx/texture.h
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/audio/sample.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o supersayan.o ../Platformer_v0-0/game/enemies/supersayan.cpp
+
+bad_cloud.o: ../Platformer_v0-0/game/enemies/bad_cloud.cpp ../Platformer_v0-0/game/enemies/bad_cloud.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/audio/sample.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bad_cloud.o ../Platformer_v0-0/game/enemies/bad_cloud.cpp
+
+torpedo.o: ../Platformer_v0-0/game/enemies/torpedo.cpp ../Platformer_v0-0/game/enemies/torpedo.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/audio/sample.h \
+		../Platformer_v0-0/init/level/room.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/game/instance_container.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/tile.h \
+		../Platformer_v0-0/audio/audioserver.h \
+		../Platformer_v0-0/audio/mus_background.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o torpedo.o ../Platformer_v0-0/game/enemies/torpedo.cpp
 
 ####### Install
 

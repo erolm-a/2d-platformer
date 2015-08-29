@@ -24,6 +24,6 @@ void supersayan::handle_collision(game_instance_generic &other)
     }
 
     // se si scontra con il giocatore egli muore
-    if(typeid(other) == typeid(player))
+    if(typeid(other) == typeid(player) && dynamic_cast<player&>(other).is_death == false)
         dynamic_cast<player&>(other).is_death = true;
 }

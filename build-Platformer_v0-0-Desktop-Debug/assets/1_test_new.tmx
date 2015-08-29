@@ -16,6 +16,9 @@
  <tileset firstgid="31" name="background" tilewidth="30" tileheight="30">
   <image source="../res/background.png" width="240" height="180"/>
  </tileset>
+ <tileset firstgid="79" name="clouds" tilewidth="70" tileheight="40">
+  <image source="../res/clouds.png" width="210" height="40"/>
+ </tileset>
  <layer name="floor" width="100" height="16">
   <data>
    <tile gid="0"/>
@@ -127,6 +130,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="60"/>
+   <tile gid="61"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -149,6 +154,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="79"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -226,6 +232,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="79"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -318,6 +325,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="60"/>
+   <tile gid="61"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -345,6 +354,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="60"/>
+   <tile gid="61"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -416,15 +427,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="79"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1666,5 +1669,14 @@
   <object name="oval_classic" gid="23" x="645.333" y="115"/>
   <object name="supersayan" gid="27" x="716.667" y="115"/>
   <object name="oval_classic" gid="23" x="827.5" y="301"/>
+  <object name="bad_cloud" gid="79" x="900" y="60" visible="0"/>
+  <object name="bad_cloud" gid="79" x="901" y="110" visible="0"/>
+  <object name="bad_cloud" gid="79" x="900" y="166" visible="0"/>
+  <object name="bad_cloud" gid="79" x="898.667" y="210.333" visible="0"/>
+  <object name="bad_cloud" gid="79" x="882.667" y="-10.6667" visible="0"/>
+  <object name="bad_cloud" gid="79" x="878.667" y="-92" visible="0"/>
+  <object name="bad_cloud" gid="79" x="817.333" y="214.667" visible="0"/>
+  <object x="1140" y="450" width="60" height="30"/>
+  <object name="torpedo" gid="26" x="1230" y="-210"/>
  </objectgroup>
 </map>

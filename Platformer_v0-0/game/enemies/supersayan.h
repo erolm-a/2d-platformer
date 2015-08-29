@@ -1,7 +1,7 @@
 #ifndef SUPERSAYAN_H
 #define SUPERSAYAN_H
 
-// supersayan: il nemico imbattibile
+// supersayan: il nemico imbattibile, ovvero l'ovale con le spine
 
 #include "oval_classic.h"
 

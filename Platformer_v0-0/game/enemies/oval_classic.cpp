@@ -39,11 +39,10 @@ void oval_classic::handle_collision(game_instance_generic &other)
     }
 
     // se si scontra con il giocatore
-    if(typeid(other) == typeid(player))
+    if(typeid(other) == typeid(player) && dynamic_cast<player&>(other).is_death == false)
     {
         // se mi ha colpito in basso muore lui
         if(other.vspeed <= 0)
-
             dynamic_cast<player&>(other).is_death = true;
         else
         {
