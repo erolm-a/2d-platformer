@@ -29,7 +29,11 @@ SOURCES += main.cpp \
     init/level/recognize_types.cpp \
     game/enemies/oval_classic.cpp \
     game/wall/wall_coin.cpp \
-    game/enemies/supersayan.cpp
+    game/enemies/supersayan.cpp \
+    game/enemies/bad_cloud.cpp \
+    game/enemies/torpedo.cpp \
+    game/enemies/turtle.cpp \
+    gfx/font.cpp
 
 INCLUDEPATH += /usr/include/SDL2
 LIBS += -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
@@ -64,4 +68,8 @@ HEADERS += \
     game/wall/wall_brick.h \
     game/enemies/oval_classic.h \
     game/wall/wall_coin.h \
-    game/enemies/supersayan.h
+    game/enemies/supersayan.h \
+    game/enemies/bad_cloud.h \
+    game/enemies/torpedo.h \
+    game/enemies/turtle.h \
+    gfx/font.h
