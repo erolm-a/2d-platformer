@@ -28,7 +28,7 @@ void free_gfx()
 
 void gfx::gfx_init()
 try {
-    Window::window_info wi;
+    Window::window_info wi{};
     MainWindow = new Window(wi);
 }
 catch(Window::init_except ex)

@@ -19,6 +19,8 @@ class instance_container
 
     struct _deleted {};
 public:
+
+    // metodi di aggiunta istanze
     template <typename S_T>
     inline game_instance_generic* add_instance(int x, int y)
     {
@@ -38,25 +40,28 @@ public:
     void delete_instance(game_instance_generic* to_delete);
 
 
-    game_instance_generic* last_inserted() const {return ins_vec.back();}
 
-    void update();
-
+    // metodi di utilizzo degli oggetti
+    void manage_keys() { for(auto* i: this->ins_vec)
+                            i->handle_key();}
+    void manage_state() {for(auto* i: this->ins_vec)
+                           i->handle_state();}
     // controlla una possibile collisione con qualche oggetto a una determinata posizione
     game_instance_generic* check_collision(const SDL_Rect& at,
                          game_instance_generic *excluded, bool solidness);
 
-    void manage_keys() { for(auto* i: this->ins_vec)
-                            i->handle_key();}
-    void manage_state() {for(auto* i: this->ins_vec)
-                            i->handle_state();}
-
+    game_instance_generic* last_inserted() const {return ins_vec.back();}
 
     inline void free()
     {
-        ins_vec.clear();
+        for(auto* i: ins_vec)
+            delete i;
         ins_vec.resize(0);
     }
+
+    void update();
+
+    ~instance_container() {free();}
 };
 
 

@@ -55,6 +55,7 @@ room::~room()
 {
     tiles.clear();
     tile_layers.clear();
+    spr_vec::clear();
 }
 
 int room::win_width() const
@@ -101,7 +102,7 @@ void room::_update() {
 
 void room::_render()
 {
-    for(auto *i: tiles)
+    for(auto &i: tiles)
         i->draw_tile(camera);
     spr_vec::draw(camera);
 }
@@ -110,8 +111,6 @@ void room::restart()
 {
     ic.free();
     spr_vec::clear();
-    tiles.clear();
-    tile_layers.clear();
     load_lev(lev_name);
 
     gfx::set_fadein();

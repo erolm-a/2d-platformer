@@ -1,4 +1,5 @@
 #include <list>
+#include <memory>
 #include <string>
 #include <cstring>
 #include <cstring>
@@ -23,7 +24,10 @@ void recognize(const XMLElement* obj_elem, instance_container& ic,
 namespace configs
 {
     XMLDocument xmlDoc;
+    string doc_name = "";
     XMLNode *pRoot;
+    // velocizza il caricamento se deve essere veloce
+    bool reload {false};
 
     int width;  // width ed height si riferiscono alla grandezza del livello
     int height; // in termini di "tile"
@@ -39,9 +43,20 @@ void level_loader::open_level(string path)
 
     // es: "assets/foo.tmx"
     path = (string) "assets/" += path += ".tmx";
+
+    // se la mappa è già stata caricata prima (un restart)
+    if(path == doc_name) {
+        reload = true;
+        first_gids.resize(0);
+        return;
+    }
+    // altrimenti imposta il non-ricaricamento
+    reload = false;
+
     if(xmlDoc.LoadFile(path.c_str())
         != XML_SUCCESS)
             throw level_loader::opening_except{};
+    doc_name = path;
 
     // il primo tag è <?xml...>, il secondo e ultimo è quello che a noi interessa invece.
     pRoot = xmlDoc.LastChild();
@@ -59,6 +74,8 @@ void level_loader::open_level(string path)
 
 void level_loader::load_map_properties(room_info &ri)
 {
+    if(configs::reload)
+        return;
     // otteniamo prima il background, poi il titolo;
     // può sembrare strano, ma il fatto è che il titolo è una
     // proprietà personalizzata ed è salvato in un tag specializzato
@@ -93,8 +110,10 @@ void level_loader::load_map_properties(room_info &ri)
     ri.level_dim.h = configs::height * configs::tile_h;
 }
 
-void level_loader::parse_layer(std::vector<tile_model*> &tile_layer)
+void level_loader::parse_layer(std::vector<std::unique_ptr<tile_model>> &tile_layer)
 {
+    if(configs::reload)
+        return;
     tile_layer.resize(0);
     // il tag tileset contiene le informazioni sui modelli (tileset).
     for(XMLElement *pElement = configs::pRoot->FirstChildElement("tileset");
@@ -118,12 +137,15 @@ void level_loader::parse_layer(std::vector<tile_model*> &tile_layer)
         string res_path = image_tag->Attribute("source");
         // toglie ".../"
         res_path = res_path.substr(3);
-        tile_layer.push_back(new tile_model(res_path.c_str(), t_w, t_h));
+        tile_layer.emplace_back(new tile_model(res_path.c_str(), t_w, t_h));
     }
 }
 
-void level_loader::parse_tiles(std::vector<tile_model*>& tilesets, std::vector<Tile*>& tiles)
+void level_loader::parse_tiles(std::vector<std::unique_ptr<tile_model>>& tilesets,
+                               std::vector<std::unique_ptr<Tile>>& tiles)
 {
+    if(configs::reload)
+        return;
     tiles.resize(0);
     using namespace configs;
     XMLElement *curLayer = configs::pRoot->FirstChildElement("layer");
@@ -146,7 +168,7 @@ void level_loader::parse_tiles(std::vector<tile_model*>& tilesets, std::vector<T
             i >= 0; i--)
         {
             if(read_gid >= first_gids[i]) // se abbiamo trovato il gid adatto
-                tiles.push_back(new Tile(read_gid - first_gids[i], *tilesets[i], x, y));
+                tiles.emplace_back(new Tile(read_gid - first_gids[i], *tilesets[i], x, y));
         }
         x += configs::tile_w;
         if(x >= width * configs::tile_w)

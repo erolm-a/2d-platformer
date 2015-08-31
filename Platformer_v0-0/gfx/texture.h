@@ -4,8 +4,8 @@
 // texture.cpp: wrapper
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <string>
+#include "font.h"
 
 enum class blend_mode: int {
     none = SDL_BLENDMODE_NONE,
@@ -40,8 +40,9 @@ public:
     Texture() {}
     // carica un'immagine
     Texture(SDL_Renderer* ren, std::string path);
-    // carica un testo
-    Texture(SDL_Renderer* ren, TTF_Font* font, std::string text_to_render, SDL_Colour text_colour, bool vol = false);
+    // carica un testo.
+    // Per le istruzioni si veda load_text
+    Texture(SDL_Renderer* ren, Font& font, std::string text_to_render, SDL_Color text_colour, bool vol = false);
     // carica una texture vuota (una plain texture)
     Texture(SDL_Renderer* ren, unsigned int w, unsigned int h, SDL_TextureAccess = SDL_TEXTUREACCESS_STREAMING);
     // costruisci una texture da un'altra; possibile solo se l'altra texture è una plain_texture,
@@ -82,8 +83,8 @@ public:
     // Dato che i testi variano spesso si deve decidere se renderli volatili o meno.
     // Se la texture è volatile, vuol dire che è creata al volo al costruttore e distrutta dal distruttore.
     // Altrimenti sarà una texture creata o al volo o da prima e sarà distrutta solo alla fine del livello.
-    void load_text(SDL_Renderer* ren, TTF_Font* font,
-                   std::string text_to_render, SDL_Colour text_colour, bool vol = false);
+    void load_text(SDL_Renderer* ren, Font& font,
+                   std::string text_to_render, SDL_Color text_colour, bool vol = false);
 
     // imposta l'algoritmo di blending
     void set_blend(blend_mode bm = blend_mode::none)

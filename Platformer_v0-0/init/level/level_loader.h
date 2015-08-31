@@ -28,10 +28,12 @@ namespace level_loader {
     void load_map_properties(room_info&);
 
     // carica tutti i livelli delle tile e li immette in un vettore
-    void parse_layer(std::vector<tile_model*> &tileset);
+    //void parse_layer(std::vector<tile_model*> &tileset);
+    void parse_layer(std::vector<std::unique_ptr<tile_model>>& tileset);
 
     // carica tutti i tile.
-    void parse_tiles(std::vector<tile_model*>& tilesets, std::vector<Tile *> &tiles);
+    //void parse_tiles(std::vector<tile_model*>& tilesets, std::vector<Tile *> &tiles);
+    void parse_tiles(std::vector<std::unique_ptr<tile_model>> &tilesets, std::vector<std::unique_ptr<Tile>> &tiles);
 
     // carica tutte le istanze; following_camera è un puntatore all'oggetto da seguire
     // (il giocatore)

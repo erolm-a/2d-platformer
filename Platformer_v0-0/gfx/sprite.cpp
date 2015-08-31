@@ -26,13 +26,11 @@ sprite::sprite(int x, int y, int w, int h)
 sprite::sprite(std::string path, unsigned short Xframes, unsigned short Yrows)
 {
     set_sprite(path, Xframes, Yrows);
-    spr_vec::add_sprite(this);
 }
 
 sprite::~sprite()
 {
     _txture.~Texture();
-    spr_vec::delete_sprite(this);
 }
 
 void sprite::set_sprite(std::string path, unsigned short Xframes,

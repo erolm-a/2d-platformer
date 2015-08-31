@@ -47,10 +47,10 @@ void hud::show_lives() {
     gfx::clear_screen();
 
     // ora creiamo una texture col titolo del livello
-    static TTF_Font* level_string_f = TTF_OpenFont("res/font/FifteenNarrow.ttf", title_ptsize);
-    static TTF_Font* num_lives_f = TTF_OpenFont("res/font/RiseStarHandSemiBold.otf", lives_ptsize);
+    static Font level_string_f("res/font/FifteenNarrow.ttf", title_ptsize);
+    static Font num_lives_f ("res/font/RiseStarHandSemiBold.otf", lives_ptsize);
 
-    SDL_Colour white{0xFF, 0xFF, 0xFF, 0xFF};
+    SDL_Color white{0xFF, 0xFF, 0xFF, 0xFF};
 
     Texture level_name(gfx::_get_render(), level_string_f, this_room->title, white);
 

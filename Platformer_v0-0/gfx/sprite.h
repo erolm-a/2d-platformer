@@ -26,6 +26,7 @@ class sprite
 public:
     // semplice costruttore per molti sprite che non hanno bisogno di immagine e possono
     // essere sostituiti da tile.
+    // l'ultimo parametro è di uso privato
 
     sprite(int x, int y, int w, int h);
 

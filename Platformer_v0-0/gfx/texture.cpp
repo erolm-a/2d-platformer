@@ -26,7 +26,7 @@ void Texture::free()
         SDL_DestroyTexture(text);
 }
 
-Texture::Texture(SDL_Renderer *ren, TTF_Font *font, std::string text_to_render, SDL_Color text_colour, bool vol)
+Texture::Texture(SDL_Renderer *ren, Font& font, std::string text_to_render, SDL_Color text_colour, bool vol)
     try {load_text(ren, font, text_to_render, text_colour, vol);}
     catch(Texture::construction_failed) { free(); throw;}
 
@@ -34,7 +34,7 @@ Texture::Texture(SDL_Renderer *ren, std::string path)
     try {load_image(ren, path);}
     catch(Texture::construction_failed) {free(); throw;}
 
-void Texture::load_text(SDL_Renderer* ren, TTF_Font *font, std::string text_to_render,
+void Texture::load_text(SDL_Renderer* ren, Font& font, std::string text_to_render,
                         SDL_Color text_colour, bool vol)
 {
     free();
@@ -44,13 +44,11 @@ void Texture::load_text(SDL_Renderer* ren, TTF_Font *font, std::string text_to_r
     if(!vol && p != classic_textures.end())
         text = p->second;
     else {
-
-        SDL_Surface* temp = TTF_RenderText_Blended(font, text_to_render.c_str(),
-                                               text_colour);
+        SDL_Texture* temp = font._get_text(ren, text_to_render, text_colour);
         if(temp == nullptr)
             throw construction_failed{(std::string)"Errore in Texture::load_text: " + TTF_GetError() + '\n'};
 
-        text = SDL_CreateTextureFromSurface(ren, temp);
+        text = temp;
         classic_textures[text_to_render] = text;
         vol_type = vol;
     }

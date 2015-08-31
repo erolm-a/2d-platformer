@@ -5,6 +5,7 @@
  * La classe room: gestisce i livelli, la camera, le istanze e le animazioni
  */
 
+#include <memory>
 #include <vector>
 #include <string>
 #include <SDL.h>
@@ -33,8 +34,9 @@ class room
     room_info room_cfg;
 
     // tile_layers gestisce i tilesets mentre tiles gestisce i tile veri e propri.
-    std::vector<tile_model*> tile_layers;
-    std::vector<Tile*> tiles;
+    //std::vector<tile_model*> tile_layers;
+    std::vector<std::unique_ptr<tile_model>> tile_layers;
+    std::vector<std::unique_ptr<Tile>> tiles;
     std::string lev_name;
 
     void load_lev(std::string  lev_name);

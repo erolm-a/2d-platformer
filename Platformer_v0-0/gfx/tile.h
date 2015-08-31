@@ -17,7 +17,7 @@ struct tile_model
 {
     friend class Tile;
     tile_model(std::string path, int tile_width, int tile_height);
-    ~tile_model();
+    ~tile_model() = default;
 
     int width() const {return tile_w;} // larghezza di un tile
     int height() const {return tile_h;} // altezza di un tile
