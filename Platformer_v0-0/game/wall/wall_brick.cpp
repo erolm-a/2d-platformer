@@ -8,7 +8,7 @@ constexpr int particle_leftright = 1;
 
 void wall_brick::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/block.png", 6, 3);
+    own_sprite = spr_vec::new_add_sprite("res/block.png", 6, 3);
     own_sprite->set_frame(0);
 
     own_sprite->x = x, own_sprite->y = y;

@@ -9,6 +9,7 @@
  */
 
 #include "game/game_instance_generic.h"
+#include "gfx/spr_vec.h"
 
 struct wall : public game_instance_generic
 {
@@ -23,7 +24,7 @@ protected:
 struct collision_box : public wall
 {
 public:
-    collision_box(int x, int y, int w, int h) {own_sprite = new sprite(x, y, w, h);}
+    collision_box(int x, int y, int w, int h) {own_sprite = spr_vec::new_add_sprite(x, y, w, h);}
 
     void spawn(int x, int y) override {(void) x, (void) y;}
 };

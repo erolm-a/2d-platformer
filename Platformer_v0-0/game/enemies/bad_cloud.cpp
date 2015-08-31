@@ -1,9 +1,10 @@
 #include "bad_cloud.h"
 #include "game/player.h"
+#include "gfx/spr_vec.h"
 
 void bad_cloud::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/clouds.png", 3);
+    own_sprite = spr_vec::new_add_sprite("res/clouds.png", 3);
     own_sprite->x = x, own_sprite->y = y;
     own_sprite->set_frame(0);
 }

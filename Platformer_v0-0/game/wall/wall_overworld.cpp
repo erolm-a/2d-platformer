@@ -10,7 +10,7 @@ constexpr unsigned overworld_frame_normal = 2;
 
 void wall_overworld::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/block.png", 6, 3);
+    own_sprite = spr_vec::new_add_sprite("res/block.png", 6, 3);
     own_sprite->x = x;
     own_sprite->y = y;
     own_sprite->set_row(overworld_row);

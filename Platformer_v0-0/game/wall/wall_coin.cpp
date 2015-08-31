@@ -9,7 +9,7 @@ constexpr int empty_frame = 1;
 
 void wall_coin::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/block.png", 6, 3);
+    own_sprite = spr_vec::new_add_sprite("res/block.png", 6, 3);
     own_sprite->x = x, own_sprite->y = y;
     own_sprite->set_frame(gold_frame);
 
@@ -45,7 +45,7 @@ constexpr float grav_accel = 0.15f;
 constexpr int jump = -4;
 void wall_coin::coin_released::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/items.png", 4, 3);
+    own_sprite = spr_vec::new_add_sprite("res/items.png", 4, 3);
     own_sprite->set_frame(0);
     own_sprite->x = x, own_sprite->y = y;
     vspeed = jump;

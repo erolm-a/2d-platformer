@@ -26,7 +26,7 @@ constexpr auto death_effect = "death.ogg";
 
 void player::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/player.png", 2, 2);
+    own_sprite = spr_vec::new_add_sprite("res/player.png", 2, 2);
     own_sprite->x = x;
     own_sprite->y = y;
     own_sprite->depth = -1;

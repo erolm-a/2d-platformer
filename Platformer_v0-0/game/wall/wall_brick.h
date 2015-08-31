@@ -32,7 +32,7 @@ public:
     {
         void spawn(int x, int y) override
         {
-            own_sprite = new sprite("res/particle.png");
+            own_sprite = spr_vec::new_add_sprite("res/particle.png");
             own_sprite->x = x, own_sprite->y = y;
         }
 

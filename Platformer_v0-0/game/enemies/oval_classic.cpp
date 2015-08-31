@@ -4,6 +4,7 @@
 #include "gfx/sprite.h"
 #include "init/level/room.h"
 #include "audio/sample.h"
+#include "gfx/spr_vec.h"
 
 constexpr int speed = 1;
 constexpr float grav_accel = 0.05f;
@@ -16,7 +17,7 @@ constexpr int col_mask_h = 27;
 
 void oval_classic::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/enemies.png", 8);
+    own_sprite = spr_vec::new_add_sprite("res/enemies.png", 8);
     own_sprite->x = x, own_sprite->y = y;
     own_sprite->set_frame(0);
     own_sprite->collision_mask = {col_mask_x, col_mask_y, col_mask_w, col_mask_h};

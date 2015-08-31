@@ -26,7 +26,7 @@ public:
 
 
     Sample jump_fx;
-    bool is_death = false;
+    bool is_death {false};
     // set_death imposta la sequenza di azioni che fa il giocatore quando muore:
     // imposta hspeed e gravity a certi valori, cambia il fotogramma dello sprite...
     void set_death();

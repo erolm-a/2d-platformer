@@ -1,13 +1,14 @@
 #include "torpedo.h"
 #include "game/player.h"
 #include "init/level/room.h"
+#include "gfx/gfx_class.h"
 
 constexpr int torpedo_frame = 3;
-constexpr int fall_speed = 12;
+constexpr int fall_speed = 15;
 
 void torpedo::spawn(int x, int y)
 {
-    own_sprite = new sprite("res/enemies.png", 8);
+    own_sprite = spr_vec::new_add_sprite("res/enemies.png", 8);
     own_sprite->set_frame(torpedo_frame);
     own_sprite->x = x, own_sprite->y = y;
     // metti in risalto
