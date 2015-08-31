@@ -5,11 +5,8 @@
 #include "gfx/spr_vec.h"
 #include "gfx/sprite.h"
 
-bool check_collision (game_instance_generic* a, game_instance_generic* b)
+bool check_collision (sprite& as, sprite& bs)
 {
-    sprite& as = *(a->own_sprite);
-    sprite& bs = *(b->own_sprite);    
-
     SDL_Rect A, B;
 
     // occupiamoci delle maschere di collisione
@@ -52,7 +49,7 @@ void instance_container::update()
     for(size_t i = 0; i < ins_vec.size(); ++i) {
         for(size_t j = i + 1; j < ins_vec.size(); ++j) {
 
-            if(::check_collision(ins_vec[i], ins_vec[j])) {
+            if(::check_collision(*ins_vec[i]->own_sprite, *ins_vec[j]->own_sprite)) {
                 auto* old_obj = ins_vec[i];
                 try {
                     ins_vec[i]->handle_collision(*ins_vec[j]);
@@ -89,27 +86,18 @@ void instance_container::update()
 game_instance_generic *instance_container::check_collision(const SDL_Rect &at,
                                          game_instance_generic *excluded, bool solidness)
 {
-    struct coll_instance : public game_instance_generic
-    {
-        coll_instance(int x, int y, int w, int h, SDL_Rect mask)
-        {
-            own_sprite = new sprite(x, y, w, h);
-            own_sprite->collision_mask = mask;
-        }
-
-        void spawn(int x, int y) override {(void) x, (void)y;}
-
-    };
-    coll_instance me(at.x, at.y, at.w, at.h, excluded->own_sprite->collision_mask);
+    sprite me(at.x, at.y, at.w, at.h);
+    me.collision_mask = excluded->own_sprite->collision_mask;
 
     for(auto* i: ins_vec)
     {
         if(i == excluded)
             continue;
-        if(::check_collision(&me, i))
+        if(::check_collision(me, *(i->own_sprite)))
             if(!solidness || i->solid) // controlla che soddisfi i criteri di solidità
                 return i;
     }
+
     return nullptr;
 }
 

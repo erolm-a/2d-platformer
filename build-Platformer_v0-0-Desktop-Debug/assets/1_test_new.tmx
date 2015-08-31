@@ -1678,5 +1678,6 @@
   <object name="bad_cloud" gid="79" x="817.333" y="214.667" visible="0"/>
   <object x="1140" y="450" width="60" height="30"/>
   <object name="torpedo" gid="26" x="1230" y="-210"/>
+  <object name="turtle" gid="24" x="870" y="300"/>
  </objectgroup>
 </map>

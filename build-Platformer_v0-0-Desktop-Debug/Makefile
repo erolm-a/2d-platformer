@@ -75,7 +75,9 @@ SOURCES       = ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/game/wall/wall_coin.cpp \
 		../Platformer_v0-0/game/enemies/supersayan.cpp \
 		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
-		../Platformer_v0-0/game/enemies/torpedo.cpp 
+		../Platformer_v0-0/game/enemies/torpedo.cpp \
+		../Platformer_v0-0/game/enemies/turtle.cpp \
+		../Platformer_v0-0/gfx/font.cpp 
 OBJECTS       = main.o \
 		init.o \
 		starter.o \
@@ -103,7 +105,9 @@ OBJECTS       = main.o \
 		wall_coin.o \
 		supersayan.o \
 		bad_cloud.o \
-		torpedo.o
+		torpedo.o \
+		turtle.o \
+		font.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -187,7 +191,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		game/wall/wall_coin.h \
 		game/enemies/supersayan.h \
 		game/enemies/bad_cloud.h \
-		game/enemies/torpedo.h ../Platformer_v0-0/main.cpp \
+		game/enemies/torpedo.h \
+		game/enemies/turtle.h \
+		gfx/font.h ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/init/init.cpp \
 		../Platformer_v0-0/init/starter.cpp \
 		../Platformer_v0-0/gfx/gfx_class.cpp \
@@ -214,7 +220,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Platformer_v0-0/game/wall/wall_coin.cpp \
 		../Platformer_v0-0/game/enemies/supersayan.cpp \
 		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
-		../Platformer_v0-0/game/enemies/torpedo.cpp
+		../Platformer_v0-0/game/enemies/torpedo.cpp \
+		../Platformer_v0-0/game/enemies/turtle.cpp \
+		../Platformer_v0-0/gfx/font.cpp
 QMAKE_TARGET  = Platformer_v0-0
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Platformer_v0-0
@@ -405,6 +413,7 @@ main.o: ../Platformer_v0-0/main.cpp ../Platformer_v0-0/init/starter.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/game_instance_generic.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/game/instance_container.h \
@@ -427,6 +436,7 @@ starter.o: ../Platformer_v0-0/init/starter.cpp ../Platformer_v0-0/init/init.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/game_instance_generic.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/game/instance_container.h \
@@ -440,7 +450,8 @@ gfx_class.o: ../Platformer_v0-0/gfx/gfx_class.cpp ../Platformer_v0-0/gfx/gfx_cla
 		../Platformer_v0-0/gfx/window.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/gfx/sprite.h \
-		../Platformer_v0-0/gfx/texture.h
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gfx_class.o ../Platformer_v0-0/gfx/gfx_class.cpp
 
 event.o: ../Platformer_v0-0/event/event.cpp ../Platformer_v0-0/event/event.h
@@ -448,6 +459,7 @@ event.o: ../Platformer_v0-0/event/event.cpp ../Platformer_v0-0/event/event.h
 
 sprite.o: ../Platformer_v0-0/gfx/sprite.cpp ../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/gfx/gfx_class.h \
 		../Platformer_v0-0/gfx/window.h \
 		../Platformer_v0-0/gfx/spr_vec.h
@@ -458,6 +470,7 @@ window.o: ../Platformer_v0-0/gfx/window.cpp ../Platformer_v0-0/gfx/window.h
 
 spr_vec.o: ../Platformer_v0-0/gfx/spr_vec.cpp ../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/gfx/spr_vec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o spr_vec.o ../Platformer_v0-0/gfx/spr_vec.cpp
 
@@ -466,6 +479,7 @@ player.o: ../Platformer_v0-0/game/player.cpp ../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
@@ -481,6 +495,7 @@ game_instance_generic.o: ../Platformer_v0-0/game/game_instance_generic.cpp ../Pl
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/game/instance_container.h \
@@ -495,12 +510,14 @@ instance_container.o: ../Platformer_v0-0/game/instance_container.cpp ../Platform
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
 		../Platformer_v0-0/gfx/spr_vec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o instance_container.o ../Platformer_v0-0/game/instance_container.cpp
 
 tile.o: ../Platformer_v0-0/gfx/tile.cpp ../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/gfx/gfx_class.h \
 		../Platformer_v0-0/gfx/window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tile.o ../Platformer_v0-0/gfx/tile.cpp
@@ -512,6 +529,7 @@ room.o: ../Platformer_v0-0/init/level/room.cpp ../Platformer_v0-0/init/level/roo
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/game_instance_generic.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/game/instance_container.h \
@@ -534,11 +552,12 @@ level_loader.o: ../Platformer_v0-0/init/level/level_loader.cpp ../Platformer_v0-
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/init/level/tinyxml2.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/init/level/room.h \
-		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/audio/audioserver.h \
 		../Platformer_v0-0/audio/mus_background.h \
 		../Platformer_v0-0/game/player.h \
@@ -551,6 +570,7 @@ hud.o: ../Platformer_v0-0/game/hud.cpp ../Platformer_v0-0/game/hud.h \
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/init/level/room.h \
@@ -565,6 +585,7 @@ hud.o: ../Platformer_v0-0/game/hud.cpp ../Platformer_v0-0/game/hud.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hud.o ../Platformer_v0-0/game/hud.cpp
 
 texture.o: ../Platformer_v0-0/gfx/texture.cpp ../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/gfx/gfx_class.h \
 		../Platformer_v0-0/gfx/window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o texture.o ../Platformer_v0-0/gfx/texture.cpp
@@ -579,6 +600,7 @@ wall_overworld.o: ../Platformer_v0-0/game/wall/wall_overworld.cpp ../Platformer_
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/gfx/spr_vec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wall_overworld.o ../Platformer_v0-0/game/wall/wall_overworld.cpp
 
@@ -593,11 +615,12 @@ wall_brick.o: ../Platformer_v0-0/game/wall/wall_brick.cpp ../Platformer_v0-0/gam
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/game/wall/wall_brick.h \
 		../Platformer_v0-0/game/wall/wall.h \
-		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/game/instance_container.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/audio/audioserver.h \
@@ -610,11 +633,12 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/init/level/tinyxml2.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/init/level/room.h \
-		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/audio/audioserver.h \
 		../Platformer_v0-0/audio/mus_background.h \
 		../Platformer_v0-0/game/player.h \
@@ -623,7 +647,9 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/game/wall/wall_coin.h \
 		../Platformer_v0-0/game/enemies/oval_classic.h \
 		../Platformer_v0-0/game/enemies/supersayan.h \
-		../Platformer_v0-0/game/enemies/bad_cloud.h
+		../Platformer_v0-0/game/enemies/bad_cloud.h \
+		../Platformer_v0-0/game/enemies/torpedo.h \
+		../Platformer_v0-0/game/enemies/turtle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recognize_types.o ../Platformer_v0-0/init/level/recognize_types.cpp
 
 oval_classic.o: ../Platformer_v0-0/game/enemies/oval_classic.cpp ../Platformer_v0-0/game/enemies/oval_classic.h \
@@ -631,11 +657,12 @@ oval_classic.o: ../Platformer_v0-0/game/enemies/oval_classic.cpp ../Platformer_v
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/init/level/room.h \
-		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/game/instance_container.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/audio/audioserver.h \
@@ -646,12 +673,13 @@ wall_coin.o: ../Platformer_v0-0/game/wall/wall_coin.cpp ../Platformer_v0-0/game/
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/game/wall/wall_coin.h \
 		../Platformer_v0-0/game/wall/wall.h \
-		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/game/instance_container.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/audio/audioserver.h \
@@ -664,7 +692,9 @@ supersayan.o: ../Platformer_v0-0/game/enemies/supersayan.cpp ../Platformer_v0-0/
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o supersayan.o ../Platformer_v0-0/game/enemies/supersayan.cpp
@@ -674,8 +704,10 @@ bad_cloud.o: ../Platformer_v0-0/game/enemies/bad_cloud.cpp ../Platformer_v0-0/ga
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/player.h \
-		../Platformer_v0-0/audio/sample.h
+		../Platformer_v0-0/audio/sample.h \
+		../Platformer_v0-0/gfx/spr_vec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bad_cloud.o ../Platformer_v0-0/game/enemies/bad_cloud.cpp
 
 torpedo.o: ../Platformer_v0-0/game/enemies/torpedo.cpp ../Platformer_v0-0/game/enemies/torpedo.h \
@@ -683,6 +715,7 @@ torpedo.o: ../Platformer_v0-0/game/enemies/torpedo.cpp ../Platformer_v0-0/game/e
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/init/level/room.h \
@@ -691,8 +724,33 @@ torpedo.o: ../Platformer_v0-0/game/enemies/torpedo.cpp ../Platformer_v0-0/game/e
 		../Platformer_v0-0/game/wall/wall.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/audio/audioserver.h \
-		../Platformer_v0-0/audio/mus_background.h
+		../Platformer_v0-0/audio/mus_background.h \
+		../Platformer_v0-0/gfx/gfx_class.h \
+		../Platformer_v0-0/gfx/window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o torpedo.o ../Platformer_v0-0/game/enemies/torpedo.cpp
+
+turtle.o: ../Platformer_v0-0/game/enemies/turtle.cpp ../Platformer_v0-0/game/enemies/turtle.h \
+		../Platformer_v0-0/game/enemies/oval_classic.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
+		../Platformer_v0-0/audio/sample.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/init/level/room.h \
+		../Platformer_v0-0/game/instance_container.h \
+		../Platformer_v0-0/gfx/tile.h \
+		../Platformer_v0-0/audio/audioserver.h \
+		../Platformer_v0-0/audio/mus_background.h \
+		../Platformer_v0-0/gfx/gfx_class.h \
+		../Platformer_v0-0/gfx/window.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o turtle.o ../Platformer_v0-0/game/enemies/turtle.cpp
+
+font.o: ../Platformer_v0-0/gfx/font.cpp ../Platformer_v0-0/gfx/font.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o font.o ../Platformer_v0-0/gfx/font.cpp
 
 ####### Install
 
