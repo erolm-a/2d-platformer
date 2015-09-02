@@ -26,9 +26,12 @@ void wall_coin::update()
                               own_sprite->y + 1, false);
 
     // se è stato colpito dal giocatore dal basso
-    if(p != nullptr && collision_with<player>(*p)
-            && p->own_sprite->y > this->own_sprite->y &&
-            p->vspeed < 0 && !broken) {
+    if(p != nullptr && typeid(*p) == typeid(player)
+            && (dynamic_cast<player*>(p)->is_death == false) // non deve essere morto
+            && p->own_sprite->y > this->own_sprite->y && p->vspeed < 0 // la collisione avviene dal basso
+             && p->own_sprite->x >= own_sprite->x && p->own_sprite->x <= own_sprite->x + own_sprite->width() // al centro
+            && !broken) // e non è già stato colpito
+    {
         // nel caso l'oggetto fosse stato invisibile
         own_sprite->visible = true;
         solid = true;
