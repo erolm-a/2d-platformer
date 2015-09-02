@@ -59,6 +59,7 @@ void oval_classic::update()
     // se sotto non c'è niente
     if(!on_floor()) {
         gravity = grav_accel;
+        gravity_limit = grav_limit;
     }
     else
     {
