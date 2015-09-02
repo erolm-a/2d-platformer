@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "level_loader.h"
+#include "recognize_types.h"
 #include "tinyxml2.h"
 #include "game/player.h"
 #include "game/wall/wall_brick.h"
@@ -16,10 +17,6 @@ using namespace std;
 // piccola funzione per un minimo controllo di errore
 template<typename EX_T>
 inline void assert_except(void* pointer) { if(pointer == nullptr) throw EX_T();}
-
-// riconosce e crea un'istanza dell'oggetto indicato dall'elemento XML
-void recognize(const XMLElement* obj_elem, instance_container& ic,
-               game_instance_generic **followed);
 
 namespace configs
 {
@@ -187,6 +184,6 @@ void level_loader::parse_objects(instance_container& ic, game_instance_generic**
 
     for(XMLElement *pObject = pObjectGroup->FirstChildElement();
         pObject != nullptr; pObject = pObject->NextSiblingElement())
-        recognize(pObject, ic, followed);
+        recognize_types::recognize(pObject, ic, followed);
 }
 

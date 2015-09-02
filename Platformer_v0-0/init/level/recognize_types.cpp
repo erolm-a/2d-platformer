@@ -1,43 +1,34 @@
+
+#include <iostream>
+#include <cstring> // strcmp
+#include <string>
+#include "recognize_types.h"
 #include "level_loader.h"
 #include "tinyxml2.h"
 #include "room.h"
-#include "cstring" // strcmp
-#include <string>
 #include "game/game_instance_generic.h"
 #include "game/instance_container.h"
 #include "game/player.h"
 #include "game/wall/wall_brick.h"
 #include "game/wall/wall_coin.h"
+#include "game/wall/block_special.h"
 #include "game/enemies/oval_classic.h"
 #include "game/enemies/supersayan.h"
 #include "game/enemies/bad_cloud.h"
 #include "game/enemies/torpedo.h"
 #include "game/enemies/turtle.h"
+#include "game/items/venom_mushroom.h"
 
 using namespace tinyxml2;
 
-
-#define str2bool(boolean_string) strcmp(boolean_string, "true") == 0
-
-// Registra un tipo T con tutte le configurazioni adeguate
-#define REGISTER(T) \
-    else if(strcmp(name, #T) == 0) { \
-        ic.add_instance<T>(x, y); \
-        pElem->QueryBoolAttribute("visible", &(ic.last_inserted()->own_sprite->visible)); \
-        \
-        const XMLNode *prop_node = pElem->FirstChild(); \
-        if(prop_node != nullptr) { \
-            for(const XMLElement* elem = prop_node->FirstChildElement(); \
-                elem != nullptr; elem = elem->NextSiblingElement()) {\
-                /*const char *attr_name; */ \
-                    \
-                elem->QueryBoolAttribute("solid", &(ic.last_inserted()->solid)); \
-            } \
-        } \
-    }
+// mezzo piuttosto grezzo di metaprogrammazione
+#define REGISTER_SIMPLE(T) \
+    if(name == (std::string)#T) \
+        new_obj = game_instance_generic::current_room->create_object<T>(x, y)
 
 
-void recognize(const XMLElement *pElem, instance_container& ic, game_instance_generic** followed)
+
+void recognize_types::recognize(const XMLElement *pElem, instance_container& ic, game_instance_generic** followed)
 {
     // otteniamo le coordinate
     int x, y;
@@ -65,11 +56,50 @@ void recognize(const XMLElement *pElem, instance_container& ic, game_instance_ge
         *followed = ic.last_inserted();
     }
     // altro
-    REGISTER(wall_brick)
-    REGISTER(wall_coin)
-    REGISTER(oval_classic)
-    REGISTER(supersayan)
-    REGISTER(bad_cloud)
-    REGISTER(turtle)
-    REGISTER(torpedo)
+    else
+        recognize(name, x, y);
+
+    pElem->QueryBoolAttribute("visible", &(ic.last_inserted()->own_sprite->visible));
+    const XMLNode *prop_node = pElem->FirstChild();
+    if(prop_node != nullptr) {
+        for(const XMLElement* elem = prop_node->FirstChildElement();
+            elem != nullptr; elem = elem->NextSiblingElement()) {
+            elem->QueryBoolAttribute("solid", &(ic.last_inserted()->solid));
+
+
+            // se è un oggetto block_special
+
+            if(name != nullptr && strcmp(name, "block_special") == 0)
+                if((std::string)elem->Attribute("name") == "releases")
+                    dynamic_cast<block_special&>(*ic.last_inserted()).released = elem->Attribute("value");
+        }
+    }
+}
+
+
+game_instance_generic* recognize_types::recognize(std::string name, int x, int y)
+{
+    game_instance_generic* new_obj;
+
+    REGISTER_SIMPLE(wall_brick);
+    else
+        REGISTER_SIMPLE(wall_coin);
+    else
+        REGISTER_SIMPLE(wall_coin);
+    else
+        REGISTER_SIMPLE(oval_classic);
+    else
+        REGISTER_SIMPLE(supersayan);
+    else
+        REGISTER_SIMPLE(bad_cloud);
+    else
+        REGISTER_SIMPLE(turtle);
+    else
+        REGISTER_SIMPLE(torpedo);
+    else
+        REGISTER_SIMPLE(block_special);
+    else
+        REGISTER_SIMPLE(venom_mushroom);
+
+    return new_obj;
 }
