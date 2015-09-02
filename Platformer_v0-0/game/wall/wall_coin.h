@@ -9,17 +9,16 @@
 class wall_coin : public wall
 {
     Sample block_coin_fx;
+protected:
     bool broken {false};
 
 public:
-    void spawn(int x, int y) override;
-    void update() override;
+    virtual void spawn(int x, int y) override;
+    virtual void update() override;
 
     struct coin_released: public game_instance_generic {
         void spawn(int x, int y) override;
         void update() override;
-    private:
-        Uint32 start_tick;
     };
 };
 #endif // WALL_COIN_H
