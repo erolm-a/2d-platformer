@@ -77,7 +77,10 @@ SOURCES       = ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
 		../Platformer_v0-0/game/enemies/torpedo.cpp \
 		../Platformer_v0-0/game/enemies/turtle.cpp \
-		../Platformer_v0-0/gfx/font.cpp 
+		../Platformer_v0-0/gfx/font.cpp \
+		../Platformer_v0-0/game/wall/block_special.cpp \
+		../Platformer_v0-0/game/items/mushroom.cpp \
+		../Platformer_v0-0/game/items/venom_mushroom.cpp 
 OBJECTS       = main.o \
 		init.o \
 		starter.o \
@@ -107,7 +110,10 @@ OBJECTS       = main.o \
 		bad_cloud.o \
 		torpedo.o \
 		turtle.o \
-		font.o
+		font.o \
+		block_special.o \
+		mushroom.o \
+		venom_mushroom.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -193,7 +199,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		game/enemies/bad_cloud.h \
 		game/enemies/torpedo.h \
 		game/enemies/turtle.h \
-		gfx/font.h ../Platformer_v0-0/main.cpp \
+		gfx/font.h \
+		game/wall/block_special.h \
+		init/level/recognize_types.h \
+		game/items/mushroom.h \
+		game/items/venom_mushroom.h ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/init/init.cpp \
 		../Platformer_v0-0/init/starter.cpp \
 		../Platformer_v0-0/gfx/gfx_class.cpp \
@@ -222,7 +232,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Platformer_v0-0/game/enemies/bad_cloud.cpp \
 		../Platformer_v0-0/game/enemies/torpedo.cpp \
 		../Platformer_v0-0/game/enemies/turtle.cpp \
-		../Platformer_v0-0/gfx/font.cpp
+		../Platformer_v0-0/gfx/font.cpp \
+		../Platformer_v0-0/game/wall/block_special.cpp \
+		../Platformer_v0-0/game/items/mushroom.cpp \
+		../Platformer_v0-0/game/items/venom_mushroom.cpp
 QMAKE_TARGET  = Platformer_v0-0
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Platformer_v0-0
@@ -560,6 +573,7 @@ level_loader.o: ../Platformer_v0-0/init/level/level_loader.cpp ../Platformer_v0-
 		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/audio/audioserver.h \
 		../Platformer_v0-0/audio/mus_background.h \
+		../Platformer_v0-0/init/level/recognize_types.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/game/wall/wall_brick.h
@@ -627,7 +641,7 @@ wall_brick.o: ../Platformer_v0-0/game/wall/wall_brick.cpp ../Platformer_v0-0/gam
 		../Platformer_v0-0/audio/mus_background.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wall_brick.o ../Platformer_v0-0/game/wall/wall_brick.cpp
 
-recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platformer_v0-0/init/level/level_loader.h \
+recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platformer_v0-0/init/level/recognize_types.h \
 		../Platformer_v0-0/game/instance_container.h \
 		../Platformer_v0-0/game/game_instance_generic.h \
 		../Platformer_v0-0/event/event.h \
@@ -637,6 +651,7 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/game/wall/wall.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
 		../Platformer_v0-0/init/level/tinyxml2.h \
+		../Platformer_v0-0/init/level/level_loader.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/audio/audioserver.h \
@@ -645,6 +660,7 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/game/wall/wall_brick.h \
 		../Platformer_v0-0/game/wall/wall_coin.h \
+		../Platformer_v0-0/game/wall/block_special.h \
 		../Platformer_v0-0/game/enemies/oval_classic.h \
 		../Platformer_v0-0/game/enemies/supersayan.h \
 		../Platformer_v0-0/game/enemies/bad_cloud.h \
@@ -751,6 +767,46 @@ turtle.o: ../Platformer_v0-0/game/enemies/turtle.cpp ../Platformer_v0-0/game/ene
 
 font.o: ../Platformer_v0-0/gfx/font.cpp ../Platformer_v0-0/gfx/font.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o font.o ../Platformer_v0-0/gfx/font.cpp
+
+block_special.o: ../Platformer_v0-0/game/wall/block_special.cpp ../Platformer_v0-0/game/wall/block_special.h \
+		../Platformer_v0-0/audio/sample.h \
+		../Platformer_v0-0/game/wall/wall_coin.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/init/level/recognize_types.h \
+		../Platformer_v0-0/game/instance_container.h \
+		../Platformer_v0-0/init/level/tinyxml2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o block_special.o ../Platformer_v0-0/game/wall/block_special.cpp
+
+mushroom.o: ../Platformer_v0-0/game/items/mushroom.cpp ../Platformer_v0-0/game/items/mushroom.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mushroom.o ../Platformer_v0-0/game/items/mushroom.cpp
+
+venom_mushroom.o: ../Platformer_v0-0/game/items/venom_mushroom.cpp ../Platformer_v0-0/game/items/venom_mushroom.h \
+		../Platformer_v0-0/game/items/mushroom.h \
+		../Platformer_v0-0/game/game_instance_generic.h \
+		../Platformer_v0-0/event/event.h \
+		../Platformer_v0-0/gfx/sprite.h \
+		../Platformer_v0-0/gfx/texture.h \
+		../Platformer_v0-0/gfx/font.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/init/level/room.h \
+		../Platformer_v0-0/game/instance_container.h \
+		../Platformer_v0-0/gfx/tile.h \
+		../Platformer_v0-0/audio/audioserver.h \
+		../Platformer_v0-0/audio/mus_background.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o venom_mushroom.o ../Platformer_v0-0/game/items/venom_mushroom.cpp
 
 ####### Install
 

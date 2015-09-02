@@ -33,7 +33,10 @@ SOURCES += main.cpp \
     game/enemies/bad_cloud.cpp \
     game/enemies/torpedo.cpp \
     game/enemies/turtle.cpp \
-    gfx/font.cpp
+    gfx/font.cpp \
+    game/wall/block_special.cpp \
+    game/items/mushroom.cpp \
+    game/items/venom_mushroom.cpp
 
 INCLUDEPATH += /usr/include/SDL2
 LIBS += -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
@@ -72,4 +75,8 @@ HEADERS += \
     game/enemies/bad_cloud.h \
     game/enemies/torpedo.h \
     game/enemies/turtle.h \
-    gfx/font.h
+    gfx/font.h \
+    game/wall/block_special.h \
+    init/level/recognize_types.h \
+    game/items/mushroom.h \
+    game/items/venom_mushroom.h

@@ -1679,5 +1679,10 @@
   <object x="1140" y="450" width="60" height="30"/>
   <object name="torpedo" gid="26" x="1230" y="-210"/>
   <object name="turtle" gid="24" x="870" y="300"/>
+  <object name="block_special" gid="6" x="750" y="60">
+   <properties>
+    <property name="releases" value="venom_mushroom"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
