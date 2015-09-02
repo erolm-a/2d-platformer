@@ -48,7 +48,7 @@ void turtle::handle_collision(game_instance_generic &other)
     //   se non sono stato coricato si comporta normalmente;
     //   altrimenti se sono stato coricato ma il muro non è marcatore si comporta normalmente;
     //   altrimenti lascia perdere
-    if(collision_with<wall>(other) && (!is_hit || other.own_sprite->visible))
+    if(collision_with<wall>(other) && (!is_hit || other.solid))
     {
         own_sprite->x -= hspeed;
         hspeed = -hspeed;
