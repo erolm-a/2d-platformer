@@ -79,4 +79,7 @@ HEADERS += \
     game/wall/block_special.h \
     init/level/recognize_types.h \
     game/items/mushroom.h \
-    game/items/venom_mushroom.h
+    game/items/venom_mushroom.h \
+    game/enemies/spikes.h \
+    game/flag.h \
+    game/items/tube.h
