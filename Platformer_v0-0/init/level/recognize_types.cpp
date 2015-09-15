@@ -9,6 +9,7 @@
 #include "game/game_instance_generic.h"
 #include "game/instance_container.h"
 #include "game/player.h"
+#include "game/flag.h"
 #include "game/wall/wall_brick.h"
 #include "game/wall/wall_coin.h"
 #include "game/wall/block_special.h"
@@ -17,7 +18,9 @@
 #include "game/enemies/bad_cloud.h"
 #include "game/enemies/torpedo.h"
 #include "game/enemies/turtle.h"
+#include "game/enemies/spikes.h"
 #include "game/items/venom_mushroom.h"
+#include "game/items/tube.h"
 
 using namespace tinyxml2;
 
@@ -100,6 +103,12 @@ game_instance_generic* recognize_types::recognize(std::string name, int x, int y
         REGISTER_SIMPLE(block_special);
     else
         REGISTER_SIMPLE(venom_mushroom);
+    else
+        REGISTER_SIMPLE(spikes);
+    else
+        REGISTER_SIMPLE(flag);
+    else
+        REGISTER_SIMPLE(tube);
 
     return new_obj;
 }

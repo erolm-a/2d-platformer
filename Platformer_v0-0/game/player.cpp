@@ -1,3 +1,4 @@
+#include <iostream>
 #include "player.h"
 #include "init/level/room.h"
 #include "wall/wall.h"
@@ -5,7 +6,8 @@
 #include "gfx/sprite.h"
 #include "gfx/spr_vec.h"
 #include "hud.h"
-#include <iostream>
+#include "items/tube.h"
+
 
 
 constexpr unsigned short frame_walk_0 = 0;
@@ -23,12 +25,19 @@ constexpr float grav_acceleration = 0.05;
 constexpr short JUMP_VOLUME = 60;
 constexpr auto jump_effect = "jump.ogg";
 constexpr auto death_effect = "death.ogg";
+constexpr auto diving_effect = "tube.ogg";
+
+SDL_Point player::checkpoint {-1, -1};
 
 void player::spawn(int x, int y)
 {
     own_sprite = spr_vec::new_add_sprite("res/player.png", 2, 2);
-    own_sprite->x = x;
-    own_sprite->y = y;
+    if(checkpoint.x < 0 && checkpoint.y < 0) {
+        own_sprite->x = x;
+        own_sprite->y = y;
+    }
+    else
+        own_sprite->x = checkpoint.x, own_sprite->y = checkpoint.y;
     own_sprite->depth = -1;
 
     // di default il personaggio si trova su un terreno (eccetto i livelli in cui
@@ -37,6 +46,7 @@ void player::spawn(int x, int y)
     jump_fx = Sample(jump_effect);
     jump_fx.set_volume(JUMP_VOLUME);
     death_fx = Sample(death_effect);
+    underground_fx = Sample(diving_effect);
 
     hud::set_player(this);
 }
@@ -45,8 +55,8 @@ void player::update()
 {
     // verifica che non sia in una situazione mortale
     hud::check_status();
-    // non fare niente se è morto
-    if(is_death)
+    // non fare niente se è morto o se è in un tubo
+    if(is_death || is_diving)
         return;
     // se sotto non c'è niente
     if(!on_floor()) {
@@ -77,13 +87,12 @@ void player::update()
         // 3°: stiamo levitando
 
         // verifichiamo se siamo sprofondati, e in tal caso saliamo
-            if(is_sunk())
-                while(is_sunk())
-                    own_sprite->y--;
+            while(is_sunk())
+                own_sprite->y--;
 
         // altrimenti aggiusta se stiamo levitando
-            else for(; !on_floor(); own_sprite->y++)
-                    ;
+            while(!on_floor())
+                own_sprite->y++;
     }
 
     // altrimenti abbiamo il terreno sotto i piedi, quindi reinizializza alla situazione
@@ -107,9 +116,17 @@ void player::handle_key()
         return;
     switch(event::get_type())
     {
-    //tutto test
         case event_types::KEYDOWN:
-            break;
+        // gestisce il caso in cui sotto c'è un tubo
+            if(event::get_key() == key_codes::DOWN && !is_diving &&
+                    typeid(*check_collision(own_sprite->x, own_sprite->y+1)) == typeid(tube))
+            {
+                is_diving = true;
+                own_sprite->set_row(row_other);
+                own_sprite->set_frame(frame_jump);
+                vspeed = 1;
+                underground_fx.play();
+            }
         default:
             stop_walk();
             break;
@@ -156,6 +173,7 @@ void player::handle_state()
 void player::set_death()
 {
     stop_walk();
+    is_diving = false;
     own_sprite->speed = 0;
     own_sprite->set_row(row_other);
     own_sprite->set_frame(frame_death);
