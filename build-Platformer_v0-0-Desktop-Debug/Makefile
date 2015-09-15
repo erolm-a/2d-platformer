@@ -203,7 +203,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		game/wall/block_special.h \
 		init/level/recognize_types.h \
 		game/items/mushroom.h \
-		game/items/venom_mushroom.h ../Platformer_v0-0/main.cpp \
+		game/items/venom_mushroom.h \
+		game/enemies/spikes.h \
+		game/flag.h \
+		game/items/tube.h ../Platformer_v0-0/main.cpp \
 		../Platformer_v0-0/init/init.cpp \
 		../Platformer_v0-0/init/starter.cpp \
 		../Platformer_v0-0/gfx/gfx_class.cpp \
@@ -501,7 +504,8 @@ player.o: ../Platformer_v0-0/game/player.cpp ../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/gfx/tile.h \
 		../Platformer_v0-0/audio/audioserver.h \
 		../Platformer_v0-0/audio/mus_background.h \
-		../Platformer_v0-0/game/hud.h
+		../Platformer_v0-0/game/hud.h \
+		../Platformer_v0-0/game/items/tube.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../Platformer_v0-0/game/player.cpp
 
 game_instance_generic.o: ../Platformer_v0-0/game/game_instance_generic.cpp ../Platformer_v0-0/game/game_instance_generic.h \
@@ -658,6 +662,7 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/audio/mus_background.h \
 		../Platformer_v0-0/game/player.h \
 		../Platformer_v0-0/audio/sample.h \
+		../Platformer_v0-0/game/flag.h \
 		../Platformer_v0-0/game/wall/wall_brick.h \
 		../Platformer_v0-0/game/wall/wall_coin.h \
 		../Platformer_v0-0/game/wall/block_special.h \
@@ -665,7 +670,11 @@ recognize_types.o: ../Platformer_v0-0/init/level/recognize_types.cpp ../Platform
 		../Platformer_v0-0/game/enemies/supersayan.h \
 		../Platformer_v0-0/game/enemies/bad_cloud.h \
 		../Platformer_v0-0/game/enemies/torpedo.h \
-		../Platformer_v0-0/game/enemies/turtle.h
+		../Platformer_v0-0/game/enemies/turtle.h \
+		../Platformer_v0-0/game/enemies/spikes.h \
+		../Platformer_v0-0/game/items/venom_mushroom.h \
+		../Platformer_v0-0/game/items/mushroom.h \
+		../Platformer_v0-0/game/items/tube.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o recognize_types.o ../Platformer_v0-0/init/level/recognize_types.cpp
 
 oval_classic.o: ../Platformer_v0-0/game/enemies/oval_classic.cpp ../Platformer_v0-0/game/enemies/oval_classic.h \
@@ -789,7 +798,14 @@ mushroom.o: ../Platformer_v0-0/game/items/mushroom.cpp ../Platformer_v0-0/game/i
 		../Platformer_v0-0/event/event.h \
 		../Platformer_v0-0/gfx/sprite.h \
 		../Platformer_v0-0/gfx/texture.h \
-		../Platformer_v0-0/gfx/font.h
+		../Platformer_v0-0/gfx/font.h \
+		../Platformer_v0-0/init/level/room.h \
+		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/game/instance_container.h \
+		../Platformer_v0-0/game/wall/wall.h \
+		../Platformer_v0-0/gfx/tile.h \
+		../Platformer_v0-0/audio/audioserver.h \
+		../Platformer_v0-0/audio/mus_background.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mushroom.o ../Platformer_v0-0/game/items/mushroom.cpp
 
 venom_mushroom.o: ../Platformer_v0-0/game/items/venom_mushroom.cpp ../Platformer_v0-0/game/items/venom_mushroom.h \
@@ -801,6 +817,8 @@ venom_mushroom.o: ../Platformer_v0-0/game/items/venom_mushroom.cpp ../Platformer
 		../Platformer_v0-0/gfx/font.h \
 		../Platformer_v0-0/game/wall/wall.h \
 		../Platformer_v0-0/gfx/spr_vec.h \
+		../Platformer_v0-0/game/player.h \
+		../Platformer_v0-0/audio/sample.h \
 		../Platformer_v0-0/init/level/room.h \
 		../Platformer_v0-0/game/instance_container.h \
 		../Platformer_v0-0/gfx/tile.h \

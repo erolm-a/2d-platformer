@@ -16,7 +16,7 @@ void torpedo::spawn(int x, int y)
 
     // il muso del siluro guarda in alto normalmente. Se lo spawn è in alto
     // dovrà guardare in basso
-    if(y - own_sprite->height() < 0) {
+    if(y + own_sprite->height() < 0) {
         own_sprite->flip_vertical();
         selected_speed = fall_speed;
     }
@@ -26,7 +26,7 @@ void torpedo::spawn(int x, int y)
 void torpedo::update()
 {
     // imposto la velocità appena il giocatore è lì
-    if(vspeed == 0 && current_room->followed->own_sprite->x >= own_sprite->x)
+    if(current_room->followed->own_sprite->x >= own_sprite->x)
         vspeed = selected_speed;
 
     // se cado fuori stanza mi elimino

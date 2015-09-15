@@ -3,6 +3,7 @@
 
 #include "game_instance_generic.h"
 #include "audio/sample.h"
+#include <tuple>
 
 class player : public game_instance_generic
 {
@@ -15,8 +16,13 @@ class player : public game_instance_generic
 
     // effetti sonori
 
-    Sample death_fx;  
+    Sample death_fx;
+
     bool is_jumping {false};
+
+    // per il tubo
+    bool is_diving {false};
+    Sample underground_fx;
 
 public:
     void spawn(int x, int y) override;
@@ -30,6 +36,9 @@ public:
     // set_death imposta la sequenza di azioni che fa il giocatore quando muore:
     // imposta hspeed e gravity a certi valori, cambia il fotogramma dello sprite...
     void set_death();
+
+    static SDL_Point checkpoint;
+
 };
 
 #endif // PLAYER_H
