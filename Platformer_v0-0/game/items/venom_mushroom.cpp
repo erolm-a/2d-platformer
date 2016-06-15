@@ -17,6 +17,8 @@ void venom_mushroom::spawn(int x, int y)
 
 void venom_mushroom::handle_collision(game_instance_generic &other)
 {
+    if(at_first) return;
+
     // se si scontra con un muro o con una classe figlia, semplicemente torna indietro.
     if(collision_with<wall>(other))
     {
@@ -24,7 +26,7 @@ void venom_mushroom::handle_collision(game_instance_generic &other)
         hspeed = -hspeed;
     }
 
-    // se si scontra con il giocatore muoriamo entrambi (perché mi mangia)
+    // se si scontra con il giocatore muoriamo entrambi (perché lo mangia)
     if(typeid(other) == typeid(player) && dynamic_cast<player&>(other).is_death == false) {
         dynamic_cast<player&>(other).is_death = true;
         current_room->delete_instance(this);

@@ -18,8 +18,8 @@ void block_special::update()
     if(!own_sprite->visible)
         solid = false;
 
-    auto* p = check_collision(own_sprite->x + own_sprite->width()/2,
-                              own_sprite->y + 1, false);
+    auto* p = check_collision(own_sprite->x,
+                                  own_sprite->y + 1, false);
 
     // se è stato colpito dal giocatore dal basso
     if(p != nullptr && collision_with<player>(*p)

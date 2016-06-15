@@ -53,6 +53,7 @@ void player::spawn(int x, int y)
 
 void player::update()
 {
+    std::cout << this->own_sprite->x << " " << this->own_sprite->y << std::endl;
     // verifica che non sia in una situazione mortale
     hud::check_status();
     // non fare niente se è morto o se è in un tubo

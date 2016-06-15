@@ -13,6 +13,7 @@ public:
     {
         own_sprite = spr_vec::new_add_sprite("res/spikes.png");
         own_sprite->x = x, own_sprite->y = y;
+        own_sprite->depth = 300;
     }
     void handle_collision(game_instance_generic& other) override
     {
