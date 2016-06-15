@@ -27,7 +27,7 @@ sudo apt-get install libsdl2{,-mixer,-ttf,-image}{,-dev}
 
 ```
 
-Per le distro che usano Gentoo Linux:
+Per Gentoo Linux:
 
 ```
 #!bash
