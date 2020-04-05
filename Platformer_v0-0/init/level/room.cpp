@@ -2,7 +2,7 @@
 #include "room.h"
 #include "gfx/gfx_class.h"
 #include "gfx/tile.h"
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "level_loader.h"
 #include "game/hud.h"
 
@@ -46,7 +46,7 @@ void room::load_lev(std::string lev_name)
 
 room::room()
 {
-    game_instance_generic::current_room = this;
+    game_actor_generic::current_room = this;
     load_lev("1_test_new");
     gfx::set_fadein();
 }
@@ -72,10 +72,10 @@ int room::win_height() const
     return h;
 }
 
-game_instance_generic *room::_check_coll(game_instance_generic *me, int x, int y, bool solid)
+game_actor_generic *room::_check_coll(game_actor_generic *me, int x, int y, bool solid)
 {
     SDL_Rect new_pos {x, y, me->own_sprite->width(), me->own_sprite->height()};
-    return ic.check_collision(new_pos, me, solid);
+    return ic.find_collision_at(new_pos, me, solid);
 }
 
 void room::_update_keys()
@@ -92,7 +92,6 @@ void room::_update() {
     // aggiorna camera
 
     int &player_x = followed->own_sprite->x;
-    //int &player_y = followed->own_sprite->y;
 
     // se il giocatore si trova all'estrema destra o all'estrema sinistra della mappa
     // non fare niente.
@@ -109,7 +108,7 @@ void room::_render()
 
 void room::restart()
 {
-    ic.free();
+    ic.clear();
     spr_vec::clear();
     load_lev(lev_name);
 

@@ -9,7 +9,7 @@ void bad_cloud::spawn(int x, int y)
     own_sprite->set_frame(0);
 }
 
-void bad_cloud::handle_collision(game_instance_generic &other)
+void bad_cloud::handle_collision(game_actor_generic &other)
 {
     // se la nuvola è invisibile mette il frame del fantasma, altrimenti mette quello normale
     player* p;

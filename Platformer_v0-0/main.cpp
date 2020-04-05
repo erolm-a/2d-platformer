@@ -2,7 +2,7 @@
 
 int main()
 {
-    delete new starter();
+    starter();
     return 0;
 }
 

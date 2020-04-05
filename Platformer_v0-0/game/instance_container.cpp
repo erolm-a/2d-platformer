@@ -1,117 +1,66 @@
 #include <iostream>
 #include <algorithm>
 #include "instance_container.h"
-#include "game_instance_generic.h"
+#include "game_actor_generic.h"
 #include "gfx/spr_vec.h"
 #include "gfx/sprite.h"
 
-bool check_collision (sprite& as, sprite& bs)
-{
-    SDL_Rect A, B;
-
-    // occupiamoci delle maschere di collisione
-
-    if(as.collision_mask.x < 0 || as.collision_mask.y < 0)
-    {
-        A.x = as.x;
-        A.y = as.y;
-        A.w = as.width();
-        A.h = as.height();
-    }
-
-    else
-    {
-        A.x = as.x + as.collision_mask.x;
-        A.y = as.y + as.collision_mask.y;
-        A.w = as.collision_mask.w;
-        A.h = as.collision_mask.h;
-    }
-
-    if(bs.collision_mask.x < 0 || bs.collision_mask.y < 0)
-    {
-        B.x = bs.x;
-        B.y = bs.y;
-        B.w = bs.width();
-        B.h = bs.height();
-    }
-    else
-    {
-        B.x = bs.x + bs.collision_mask.x;
-        B.y = bs.y + bs.collision_mask.y;
-        B.w = bs.collision_mask.w;
-        B.h = bs.collision_mask.h;
-    }
-
-    return SDL_HasIntersection(&A, &B);
-}
 void instance_container::update()
-{    
-    for(size_t i = 0; i < ins_vec.size(); ++i) {
-        for(size_t j = i + 1; j < ins_vec.size(); ++j) {
-
-            if(::check_collision(*ins_vec[i]->own_sprite, *ins_vec[j]->own_sprite)) {
-                auto* old_obj = ins_vec[i];
-                try {
-                    ins_vec[i]->handle_collision(*ins_vec[j]);
-                    ins_vec[j]->handle_collision(*ins_vec[i]);
-                }
-                catch(_deleted)
-                {
-                    // se viene eliminato un oggetto il vettore viene riallocato.
-                    // ins_vec[i] punterà a qualcos altro se è stato eliminato ins_vec[i],
-                    // altrimenti sarà ins_vec[j]
-                    if(ins_vec[i] != old_obj) {
-                        i--;
-                        goto again;
-                    }
-                    else
-                        j -= 1;
-                }
+{
+    for(auto it_i = ins_vec.begin(); it_i != ins_vec.end(); it_i++) {
+        if (it_i->deleted)
+            continue;
+        auto actor_i = it_i->actor;
+        for(auto it_j = std::next(it_i); it_j != ins_vec.end(); it_j++) {
+            if(it_j->deleted)
+                continue;
+            auto actor_j = it_j->actor;
+            if(collide(*actor_i->own_sprite, *actor_j->own_sprite)) {
+                actor_i->handle_collision(*actor_j);
+                actor_j->handle_collision(*actor_i);
             }
         }
-        // ora aggiorna l'oggetto
-        try {
-            ins_vec[i]->update();
-            ins_vec[i]->_update_kinematic();
-        }
-        catch(_deleted)
-        {i--; goto again;}
-
-        // non fare niente se l'oggetto è stato eliminato
-        again:
-            ;
+        actor_i->update();
+        actor_i->update_kinematic();
     }
+
+    collect_deleted();
 }
 
-game_instance_generic *instance_container::check_collision(const SDL_Rect &at,
-                                         game_instance_generic *excluded, bool solidness)
+game_actor_generic *instance_container::find_collision_at(const SDL_Rect &at,
+                                                          game_actor_generic *excluded,
+                                                          bool solidness)
 {
-    sprite me(at.x, at.y, at.w, at.h);
-    me.collision_mask = excluded->own_sprite->collision_mask;
-
-    for(auto* i: ins_vec)
+    for(auto& i: ins_vec)
     {
-        if(i == excluded)
+        auto* actor = i.actor;
+        if(i.actor == excluded)
             continue;
-        if(::check_collision(me, *(i->own_sprite)))
-            if(!solidness || i->solid) // controlla che soddisfi i criteri di solidità
-                return i;
+        if(actor->own_sprite->collide(at))
+            if(!solidness || actor->solid)
+                return actor;
     }
 
     return nullptr;
 }
 
-void instance_container::delete_instance(game_instance_generic *to_delete)
-{
-    auto found = std::find(ins_vec.begin(), ins_vec.end(), to_delete);
+void instance_container::collect_deleted() {
+    for(auto it = ins_vec.begin(); it!= ins_vec.end();) {
+        auto actor = it->actor;
+        if(find(deletion_pool.begin(), deletion_pool.end(), actor) != deletion_pool.end()) {
+            spr_vec::delete_sprite(actor->own_sprite);
+            it = ins_vec.erase(it);
+        }
+        else it++;
+    }
+}
 
-    // è stato trovato
-    if(found != ins_vec.end()) {
-        spr_vec::delete_sprite(to_delete->own_sprite);
-        delete to_delete;
-        if(found + 1 != ins_vec.end())
-            std::move_backward(found + 1, ins_vec.end(), ins_vec.end()-1);
-        ins_vec.resize(ins_vec.size() - 1);
-        throw _deleted();
+void instance_container::delete_instance(game_actor_generic *to_delete)
+{
+    auto found = std::find_if(ins_vec.begin(), ins_vec.end(),
+                              [to_delete](const ActorWrapper& a) {return a.actor == to_delete;});
+    if (found != ins_vec.end()) {
+        deletion_pool.push_back(found->actor);
+        found->deleted = true;
     }
 }

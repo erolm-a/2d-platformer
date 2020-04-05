@@ -7,7 +7,7 @@
 AudioServer::AudioServer()
 {
 
-    if(Mix_Init(MIX_INIT_FLUIDSYNTH | MIX_INIT_OGG | MIX_INIT_MP3) < 0) {
+    if(Mix_Init(MIX_INIT_MID | MIX_INIT_OGG | MIX_INIT_MP3) < 0) {
         // Nonostante il suono non ci sia, il gioco rimane fruibile
         SDL_Log("Errore in AudioServer::AudioServer(): %s\n"
                 "L'audio non sarà disponibile",

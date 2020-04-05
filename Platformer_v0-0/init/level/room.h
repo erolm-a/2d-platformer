@@ -10,7 +10,7 @@
 #include <string>
 #include <SDL.h>
 #include "gfx/spr_vec.h"
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "game/instance_container.h"
 #include "gfx/tile.h"
 #include "audio/audioserver.h" // Test
@@ -41,7 +41,7 @@ class room
 
     void load_lev(std::string  lev_name);
 
-    unsigned frame_sleeping {0};
+    //unsigned frame_sleeping {0};
 
     // camera è il rettangolo che rappresenta tutto ciò che si vede;
     SDL_Rect camera;
@@ -60,7 +60,7 @@ public:
     // ricarica la mappa.
     void restart();
 
-    game_instance_generic* _check_coll(game_instance_generic *me, int x, int y, bool solid);
+    game_actor_generic* _check_coll(game_actor_generic *me, int x, int y, bool solid);
 
     int width() const {return room_cfg.level_dim.w;}
     int height() const {return room_cfg.level_dim.h;}
@@ -68,12 +68,12 @@ public:
     int win_height() const;
 
     template<typename T>
-    game_instance_generic* create_object(int x, int y)
+    game_actor_generic* create_object(int x, int y)
     {
         return ic.add_instance<T>(x, y);
     }
 
-    void delete_instance(game_instance_generic* to_delete)
+    void delete_instance(game_actor_generic* to_delete)
     {ic.delete_instance(to_delete);}
 
     AudioServer audio{};
@@ -82,7 +82,7 @@ public:
     const std::string &title = room_cfg.title;
 
     // followed è il puntatore all'oggetto da seguire;
-    game_instance_generic* followed;
+    game_actor_generic* followed;
 };
 
 #endif // ROOM_H

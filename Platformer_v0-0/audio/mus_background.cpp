@@ -4,7 +4,7 @@
 
 void make_music_path(std::string& path)
 {
-    path = (std::string)"res/BGM/" + path;
+    path = std::string{"res/BGM/"} + path;
 }
 
 void Mus_background::load_mus(std::string path)

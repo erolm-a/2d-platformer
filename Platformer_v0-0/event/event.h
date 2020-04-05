@@ -18,8 +18,11 @@ enum class event_types : Event_Type {
     MOUSE_RELEASED = SDL_MOUSEBUTTONUP,
     MOUSE_MOVEMENT = SDL_MOUSEMOTION
 };
+
 // non tutti i codici sono supportati.
 namespace key_codes {
+    //int num_supported_keys {43};
+    using key_type = int;
     constexpr auto ESC = SDL_SCANCODE_ESCAPE;
     constexpr auto NUM_0 = SDL_SCANCODE_0;
     constexpr auto NUM_1 = SDL_SCANCODE_1;
@@ -74,7 +77,7 @@ namespace event {
     // ottieni il tipo di evento
     event_types get_type();
     // ottieni l'evento specifico
-    auto get_key() -> decltype(key_codes::A);
+    SDL_Scancode get_key();
 }
 
 namespace keystate {

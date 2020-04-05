@@ -6,6 +6,7 @@ CONFIG += c++14
 QMAKE_CXXFLAGS += -std=c++14
 
 SOURCES += main.cpp \
+    game/game_actor_generic.cpp \
     init/init.cpp \
     init/starter.cpp \
     gfx/gfx_class.cpp \
@@ -14,7 +15,6 @@ SOURCES += main.cpp \
     gfx/window.cpp \
     gfx/spr_vec.cpp \
     game/player.cpp \
-    game/game_instance_generic.cpp \
     game/instance_container.cpp \
     gfx/tile.cpp \
     init/level/tinyxml2.cpp \
@@ -46,6 +46,7 @@ include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
+    game/game_actor_generic.h \
     init/init.h \
     init/starter.h \
     gfx/gfx_class.h \
@@ -53,7 +54,6 @@ HEADERS += \
     gfx/sprite.h \
     gfx/window.h \
     gfx/spr_vec.h \
-    game/game_instance_generic.h \
     game/instance_container.h \
     game/player.h \
     game/wall.h \
@@ -83,4 +83,5 @@ HEADERS += \
     game/items/venom_mushroom.h \
     game/enemies/spikes.h \
     game/flag.h \
-    game/items/tube.h
+    game/items/tube.h \
+    init/level/tinyxml2_copy.h

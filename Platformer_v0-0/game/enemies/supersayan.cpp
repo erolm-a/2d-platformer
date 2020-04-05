@@ -9,7 +9,7 @@ void supersayan::spawn(int x, int y)
     own_sprite->collision_mask = {0, 9, own_sprite->width(), 33};
 }
 
-void supersayan::handle_collision(game_instance_generic &other)
+void supersayan::handle_collision(game_actor_generic &other)
 {
     // se si scontra con un muro o con una classe figlia, semplicemente torna indietro.
     if(collision_with<wall>(other))

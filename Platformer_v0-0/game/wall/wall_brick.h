@@ -8,7 +8,7 @@
  *
  * */
 
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "wall.h"
 #include "audio/sample.h"
 #include "init/level/room.h"
@@ -28,7 +28,7 @@ public:
      * È un game_instance_generic in quanto richiede di movimento
      * */
 
-    class particles : public game_instance_generic
+    class particles : public game_actor_generic
     {
         void spawn(int x, int y) override
         {

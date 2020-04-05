@@ -14,56 +14,55 @@ flipping operator |(flipping& a, flipping& b)
 }
 
 
-// mappa per le texture ordinali (immagini e scritte).
-// Nessun valore della mappa può essere cancellato tranne che a causa di un reset del livello.
-// La chiave è una stringa contenente il file immagine da caricare o il testo.
-std::unordered_map<std::string, SDL_Texture*> classic_textures;
+// Implement a lightweight on textures.
+// As textures might change, this is useful only for COW rendering
+static std::unordered_map<std::string, SDL_Texture*> ordinary_texture_memo;
 
 void Texture::free()
 {
-    // le texture statiche possono essere distrutte solo con _clear()
-    if(text && access != SDL_TEXTUREACCESS_STATIC && vol_type)
+    // static textures require to be destucted with clear()
+    if(text && access != SDL_TEXTUREACCESS_STATIC && is_volatile)
         SDL_DestroyTexture(text);
 }
 
 Texture::Texture(SDL_Renderer *ren, Font& font, std::string text_to_render, SDL_Color text_colour, bool vol)
     try {load_text(ren, font, text_to_render, text_colour, vol);}
-    catch(Texture::construction_failed) { free(); throw;}
+    catch(Texture::construction_failed e) {SDL_Log("%s", e.what.c_str()); free();}
 
 Texture::Texture(SDL_Renderer *ren, std::string path)
     try {load_image(ren, path);}
-    catch(Texture::construction_failed) {free(); throw;}
+    catch(Texture::construction_failed e) {SDL_Log("%s", e.what.c_str()); free();}
 
 void Texture::load_text(SDL_Renderer* ren, Font& font, std::string text_to_render,
                         SDL_Color text_colour, bool vol)
 {
     free();
 
-    auto p = classic_textures.find(text_to_render);
+    auto p = ordinary_texture_memo.find(text_to_render);
     // se la texture non è volatile e c'è già una texture adatta
-    if(!vol && p != classic_textures.end())
+    if(!vol && p != ordinary_texture_memo.end())
         text = p->second;
     else {
         SDL_Texture* temp = font._get_text(ren, text_to_render, text_colour);
         if(temp == nullptr)
-            throw construction_failed{(std::string)"Errore in Texture::load_text: " + TTF_GetError() + '\n'};
+            throw construction_failed{std::string{__func__} + TTF_GetError() + '\n'};
 
         text = temp;
-        classic_textures[text_to_render] = text;
-        vol_type = vol;
+        ordinary_texture_memo[text_to_render] = text;
+        is_volatile = vol;
     }
     set_info();
 }
 
 void Texture::load_image(SDL_Renderer *ren, std::string path)
 {
-    auto p = classic_textures.find(path);
-    if(p != classic_textures.end())
+    auto p = ordinary_texture_memo.find(path);
+    if(p != ordinary_texture_memo.end())
         text = p->second;
     else {
         if((text = IMG_LoadTexture(ren, path.c_str())) == nullptr)
-            throw construction_failed{(std::string)"Errore in Texture::load_image: " + IMG_GetError() + '\n'};
-        classic_textures[path] = text;
+            throw construction_failed{std::string{__func__} + ":" + IMG_GetError() + '\n'};
+        ordinary_texture_memo[path] = text;
     }
     set_info();
 }
@@ -73,8 +72,7 @@ Texture::Texture(SDL_Renderer *ren, unsigned int w, unsigned int h, SDL_TextureA
     if((text = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGBA8888,
                                  access, w, h))
             == nullptr)
-        throw construction_failed{((std::string)"Errore in Texture::Texture(SDL_Renderer*, unsigned, unsigned): "
-                                            + SDL_GetError() + '\n')};
+        throw construction_failed{(std::string{__func__} + ':' + SDL_GetError() + '\n')};
 
     set_info();
 }
@@ -137,6 +135,6 @@ void Texture::set_target(SDL_Renderer *ren)
 
 void Texture::_clear()
 {
-    for(auto p = classic_textures.begin(); p != classic_textures.end(); p++)
+    for(auto p = ordinary_texture_memo.begin(); p != ordinary_texture_memo.end(); p++)
         SDL_DestroyTexture(p->second);
 }

@@ -5,13 +5,13 @@
 // Se è visibile ha l'aspetto di una normale nuvola, altrimenti è invisibile ma il
 // comportamento è uguale
 
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 
-class bad_cloud : public game_instance_generic
+class bad_cloud : public game_actor_generic
 {
 public:
     void spawn(int x, int y) override;
-    void handle_collision(game_instance_generic& other) override;
+    void handle_collision(game_actor_generic& other) override;
 };
 
 #endif // BAD_CLOUD_H

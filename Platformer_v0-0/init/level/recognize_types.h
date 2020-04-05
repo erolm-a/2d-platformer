@@ -8,9 +8,9 @@
 
 namespace recognize_types {
     // riconosce un nome oggetto e lo costruisce alla posizione {x, y} e restituisce un suo collegamento
-    game_instance_generic* recognize(std::string name, int x, int y);
+    game_actor_generic* recognize(std::string name, int x, int y);
 
     // riconosce un tag oggetto e gli attributi figli e costruisce adeguatamente
-    void recognize(const tinyxml2::XMLElement *pElem, instance_container& ic, game_instance_generic** followed);
+    void recognize(const tinyxml2::XMLElement *pElem, instance_container& ic, game_actor_generic** followed);
 }
 #endif // RECOGNIZE_TYPES_H

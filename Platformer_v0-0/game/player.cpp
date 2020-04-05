@@ -10,17 +10,17 @@
 
 
 
-constexpr unsigned short frame_walk_0 = 0;
-constexpr unsigned short frame_walk_1 = 1;
+//constexpr unsigned short frame_walk_0 = 0;
+//constexpr unsigned short frame_walk_1 = 1;
 constexpr unsigned short frame_jump = 0;
 constexpr unsigned short frame_death = 1;
-constexpr unsigned short row_walk = 0;
+//constexpr unsigned short row_walk = 0;
 constexpr unsigned short row_other = 1;
 
 constexpr unsigned short walk_speed = 2;
 constexpr unsigned short walk_frame_speed = 10;
 constexpr unsigned short jump_speed = 4;
-constexpr float grav_acceleration = 0.05;
+constexpr float grav_acceleration = 0.05f;
 
 constexpr short JUMP_VOLUME = 60;
 constexpr auto jump_effect = "jump.ogg";
@@ -36,12 +36,13 @@ void player::spawn(int x, int y)
         own_sprite->x = x;
         own_sprite->y = y;
     }
-    else
-        own_sprite->x = checkpoint.x, own_sprite->y = checkpoint.y;
+    else {
+        own_sprite->x = checkpoint.x;
+        own_sprite->y = checkpoint.y;
+    }
     own_sprite->depth = -1;
 
-    // di default il personaggio si trova su un terreno (eccetto i livelli in cui
-    // lo spawn è in alto
+    // normally the sprite is on the floor, unless it's being spawned in air
     is_jumping = false;
     jump_fx = Sample(jump_effect);
     jump_fx.set_volume(JUMP_VOLUME);
@@ -53,22 +54,20 @@ void player::spawn(int x, int y)
 
 void player::update()
 {
-    std::cout << this->own_sprite->x << " " << this->own_sprite->y << std::endl;
-    // verifica che non sia in una situazione mortale
+    // if died, don't update
     hud::check_status();
-    // non fare niente se è morto o se è in un tubo
     if(is_death || is_diving)
         return;
-    // se sotto non c'è niente
+    // check if I am stading on the ground
     if(!on_floor()) {
         is_jumping = true;
         gravity = grav_acceleration;
         gravity_limit = 5;
     }
 
-    // se sbattiamo la testa con qualcosa
-    if(vspeed < 0 && check_collision(own_sprite->x, own_sprite->y + vspeed)) {
-        // sale fino a sfiorare il tetto
+    // bounce when the head hits something
+    game_actor_generic* other;
+    if(vspeed < 0 && (other = check_collision(own_sprite->x, own_sprite->y + vspeed))) {
         for(; !check_collision(own_sprite->x, own_sprite->y - 1); own_sprite->y--)
             ;
         vspeed = 0;
@@ -115,23 +114,20 @@ void player::handle_key()
 {
     if(is_death)
         return;
-    switch(event::get_type())
-    {
-        case event_types::KEYDOWN:
-        // gestisce il caso in cui sotto c'è un tubo
-            if(event::get_key() == key_codes::DOWN && !is_diving &&
-                    typeid(*check_collision(own_sprite->x, own_sprite->y+1)) == typeid(tube))
-            {
-                is_diving = true;
-                own_sprite->set_row(row_other);
-                own_sprite->set_frame(frame_jump);
-                vspeed = 1;
-                underground_fx.play();
-            }
-        default:
-            stop_walk();
-            break;
-    }
+    // if there is a tube under the player
+    if (event::get_type() == event_types::KEYDOWN &&
+            event::get_key() == key_codes::DOWN && !is_diving &&
+                typeid(*check_collision(own_sprite->x, own_sprite->y+1)) == typeid(tube))
+        {
+            is_diving = true;
+            own_sprite->set_row(row_other);
+            own_sprite->set_frame(frame_jump);
+            vspeed = 1;
+            own_sprite->depth = 100;
+            underground_fx.play();
+        }
+    // in any case, stop walking
+    stop_walk();
 }
 
 void player::handle_state()
@@ -176,6 +172,7 @@ void player::set_death()
     stop_walk();
     is_diving = false;
     own_sprite->speed = 0;
+    own_sprite->depth = -1;
     own_sprite->set_row(row_other);
     own_sprite->set_frame(frame_death);
     vspeed = -jump_speed;

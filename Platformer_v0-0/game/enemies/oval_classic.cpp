@@ -25,7 +25,7 @@ void oval_classic::spawn(int x, int y)
     gravity_limit = grav_limit;
 }
 
-void oval_classic::handle_collision(game_instance_generic &other)
+void oval_classic::handle_collision(game_actor_generic &other)
 {
     // se si scontra con un muro o con una classe figlia, semplicemente torna indietro.
     if(collision_with<wall>(other))

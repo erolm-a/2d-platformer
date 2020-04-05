@@ -1,4 +1,4 @@
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "gfx/sprite.h"
 #include "game/player.h"
 #include "wall_coin.h"

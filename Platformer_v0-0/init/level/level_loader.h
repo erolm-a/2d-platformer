@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 #include <game/instance_container.h>
-#include <game/game_instance_generic.h>
+#include <game/game_actor_generic.h>
 #include "tinyxml2.h"
 #include "gfx/tile.h"
 #include "room.h"
@@ -37,7 +37,7 @@ namespace level_loader {
 
     // carica tutte le istanze; following_camera è un puntatore all'oggetto da seguire
     // (il giocatore)
-    void parse_objects(instance_container& ic, game_instance_generic** followed);
+    void parse_objects(instance_container& ic, game_actor_generic** followed);
 }
 #endif // LEVEL_LOADER
 

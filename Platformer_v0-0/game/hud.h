@@ -1,12 +1,9 @@
-#ifndef HUD_H
-#define HUD_H
-
+#pragma once
 /*
     hud: gestisce alcuni parametri come: la vita del giocatore, le sue morti, le transizioni
     della stanza
  * */
 
-#include "game_instance_generic.h"
 #include "player.h"
 
 namespace hud {
@@ -21,4 +18,3 @@ namespace hud {
 
     //...
 }
-#endif // HUD_H

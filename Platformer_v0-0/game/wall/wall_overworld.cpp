@@ -34,9 +34,3 @@ void wall_overworld::spawn(int x, int y)
     else
         own_sprite->set_frame(overworld_frame_normal);
 }
-
-void wall_overworld::handle_collision(game_instance_generic &other)
-{
-    std::cout << "Collisione con wall: " << other.own_sprite->width() << 'x'
-              << other.own_sprite->height() << '\n';
-}

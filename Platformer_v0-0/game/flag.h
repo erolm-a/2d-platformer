@@ -3,11 +3,11 @@
 
 // flag: la bandiera checkpoint
 
-#include "game_instance_generic.h"
+#include "game_actor_generic.h"
 #include "gfx/spr_vec.h"
 #include "game/player.h"
 
-class flag : public game_instance_generic
+class flag : public game_actor_generic
 {
     bool done {false};
 public:
@@ -17,7 +17,7 @@ public:
         own_sprite->x = x, own_sprite->y = y;
         own_sprite->set_frame(0);
     }
-    void handle_collision(game_instance_generic& other) override
+    void handle_collision(game_actor_generic& other) override
     {
         if(!done && typeid(other) == typeid(player)) {
             dynamic_cast<player&>(other).checkpoint = {.x = own_sprite->x,

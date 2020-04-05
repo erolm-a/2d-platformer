@@ -127,7 +127,7 @@ void level_loader::parse_layer(std::vector<std::unique_ptr<tile_model>> &tile_la
         pElement->QueryIntAttribute("tilewidth", &t_w);
         pElement->QueryIntAttribute("tileheight", &t_h);
 
-        // il tag figlo è <image>, che contiene informazioni sul modello
+        // il tag figlio è <image>, che contiene informazioni sul modello
         XMLElement *image_tag = pElement->FirstChildElement();
 
         // inizializza il modello
@@ -173,7 +173,7 @@ void level_loader::parse_tiles(std::vector<std::unique_ptr<tile_model>>& tileset
     }
 }
 
-void level_loader::parse_objects(instance_container& ic, game_instance_generic** followed)
+void level_loader::parse_objects(instance_container& ic, game_actor_generic** followed)
 {
     /* Ordine dei tag:
      *          <objectgroup name="">

@@ -35,7 +35,7 @@ void torpedo::update()
         current_room->delete_instance(this);
 }
 
-void torpedo::handle_collision(game_instance_generic &other)
+void torpedo::handle_collision(game_actor_generic &other)
 {
     if(typeid(other) == typeid(player) && dynamic_cast<player&>(other).is_death == false)
         dynamic_cast<player&>(other).is_death = true;

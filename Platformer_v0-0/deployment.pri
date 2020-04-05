@@ -189,3 +189,6 @@ export (LIBS)
 export (QMAKE_EXTRA_TARGETS)
 }
 
+DISTFILES += \
+    $$PWD/scripts/type_generator.sh
+

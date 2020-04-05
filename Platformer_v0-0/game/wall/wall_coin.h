@@ -16,7 +16,7 @@ public:
     virtual void spawn(int x, int y) override;
     virtual void update() override;
 
-    struct coin_released: public game_instance_generic {
+    struct coin_released: public game_actor_generic {
         void spawn(int x, int y) override;
         void update() override;
     };

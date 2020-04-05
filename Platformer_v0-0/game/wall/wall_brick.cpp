@@ -30,7 +30,7 @@ void wall_brick::update()
         other->vspeed = 0;
         break_fx.play();
         // crea le particelle sul blocco
-        game_instance_generic* particles_vec[4];
+        game_actor_generic* particles_vec[4];
 
         for(int i = 0; i < 4; i++) {
             particles_vec[i] = current_room->create_object<particles>(own_sprite->x + own_sprite->width() / 2,

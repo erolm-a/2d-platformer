@@ -15,7 +15,7 @@ void venom_mushroom::spawn(int x, int y)
     own_sprite->set_frame(frame_venom);
 }
 
-void venom_mushroom::handle_collision(game_instance_generic &other)
+void venom_mushroom::handle_collision(game_actor_generic &other)
 {
     if(at_first) return;
 

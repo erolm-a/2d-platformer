@@ -2,11 +2,11 @@
 #define SPIKES_H
 
 // spikes: punte (in)visibili
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "game/player.h"
 #include "gfx/spr_vec.h"
 
-class spikes : public game_instance_generic
+class spikes : public game_actor_generic
 {
 public:
     void spawn(int x, int y) override
@@ -15,7 +15,7 @@ public:
         own_sprite->x = x, own_sprite->y = y;
         own_sprite->depth = 300;
     }
-    void handle_collision(game_instance_generic& other) override
+    void handle_collision(game_actor_generic& other) override
     {
         // uccide il giocatore se ci cammina o è caduto
         if(typeid(other) == typeid(player) && other.vspeed >= 0 && dynamic_cast<player&>(other).is_death == false) {

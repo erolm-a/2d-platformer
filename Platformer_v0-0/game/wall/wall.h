@@ -8,10 +8,10 @@
  * e quindi si attribuisce ai tile il compito di differenziarle.
  */
 
-#include "game/game_instance_generic.h"
+#include "game/game_actor_generic.h"
 #include "gfx/spr_vec.h"
 
-struct wall : public game_instance_generic
+struct wall : public game_actor_generic
 {
     //void spawn(int x, int y, int w, int h){ solid = true; own_sprite = new sprite(x, y, w, h); }
     wall() {solid = true;}

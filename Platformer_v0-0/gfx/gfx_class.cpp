@@ -112,5 +112,3 @@ void gfx::set_fadein()
 {
     is_fading = true;
 }
-
-

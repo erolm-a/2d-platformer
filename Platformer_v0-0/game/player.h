@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "game_instance_generic.h"
+#include "game_actor_generic.h"
 #include "audio/sample.h"
 #include <tuple>
 
-class player : public game_instance_generic
+class player : public game_actor_generic
 {
     // aiutanti
     void set_walk() {is_jumping = false; own_sprite->set_row(0);

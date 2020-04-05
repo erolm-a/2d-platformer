@@ -15,7 +15,7 @@ struct Tile;
 
 struct tile_model
 {
-    friend class Tile;
+    friend struct Tile;
     tile_model(std::string path, int tile_width, int tile_height);
     ~tile_model() = default;
 
@@ -23,8 +23,8 @@ struct tile_model
     int height() const {return tile_h;} // altezza di un tile
 private:
     Texture texture;
-    unsigned int tile_w, tile_h; // larghezza e altezza di un tile
-    unsigned int img_w, img_h; // larghezza e altezza dell'immagine completa
+    int tile_w, tile_h; // larghezza e altezza di un tile
+    int img_w, img_h; // larghezza e altezza dell'immagine completa
 };
 
 struct Tile

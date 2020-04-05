@@ -1,6 +1,4 @@
-#ifndef SPR_VEC_H
-#define SPR_VEC_H
-
+#pragma once
 /*
  * spr_vec: interfaccia del container per gestire gli sprite con
  * la tecnica RAII. Essendo un'interfaccia, non è istanziabile
@@ -17,13 +15,12 @@ namespace spr_vec {
     void draw(SDL_Rect& camera);
 
     // aggiunge uno sprite all'elenco
-    void add_sprite(sprite *spr);
+    void add_sprite(Sprite *spr);
 
     // inizializza uno sprite, lo aggiunge a un'elenco e ne da un puntatore
-    sprite* new_add_sprite(std::string path, int _Xframes = 1, int _Yframes = 1);
-    sprite* new_add_sprite(int x, int y, int w, int h);
+    Sprite* new_add_sprite(std::string path, int _Xframes = 1, int _Yframes = 1);
+    Sprite* new_add_sprite(int x, int y, int w, int h);
 
-    void delete_sprite(sprite* spr);
+    void delete_sprite(Sprite* spr);
     void clear();
 }
-#endif // SPR_VEC_H

@@ -4,7 +4,7 @@
 Font::Font(std::string path, int ptsize)
 {
     if((_font = TTF_OpenFont(path.c_str(), ptsize)) == nullptr)
-        SDL_Log("Impossibile aprire il font %s: %s\n", TTF_GetError());
+        SDL_Log("%s:Unable to open the font name %s: %s\n", __func__, path.c_str(), TTF_GetError());
 }
 
 Font::~Font()

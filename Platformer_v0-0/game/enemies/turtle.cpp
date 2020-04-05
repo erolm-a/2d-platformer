@@ -41,7 +41,7 @@ void turtle::set_flipped()
     is_hit = true;
 }
 
-void turtle::handle_collision(game_instance_generic &other)
+void turtle::handle_collision(game_actor_generic &other)
 {
     player* p;
     // se è un muro:

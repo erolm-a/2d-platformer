@@ -29,7 +29,7 @@ class Texture
     int access; // texture statica o in streaming
     Uint32 format; // formato del colore
     void set_info() {SDL_QueryTexture(text, &format, &access, &img_width, &img_height);}
-    bool vol_type {false};
+    bool is_volatile {false};
 
 public:
     // ogni costruttore fornisce una garanzia di base.
@@ -61,11 +61,11 @@ public:
     // funzioni che non modificano la texture a basso livello
 
     // restituisce le dimensioni in contemporanea
-    void size(unsigned &img_w, unsigned &img_h)
-        {img_w = img_width, img_h = img_height;}
+    void size(int &img_w, int &img_h)
+        {img_w = img_width; img_h = img_height;}
     // restituisce le dimensioni singole
-    int width() const{return img_width;}
-    int height() const{return img_height;}
+    int width() const {return img_width;}
+    int height() const {return img_height;}
 
 
     // funzioni di basso livello
@@ -84,7 +84,7 @@ public:
     // Se la texture è volatile, vuol dire che è creata al volo al costruttore e distrutta dal distruttore.
     // Altrimenti sarà una texture creata o al volo o da prima e sarà distrutta solo alla fine del livello.
     void load_text(SDL_Renderer* ren, Font& font,
-                   std::string text_to_render, SDL_Color text_colour, bool vol = false);
+                   std::string text_to_render, SDL_Color text_colour, bool is_volatile = false);
 
     // imposta l'algoritmo di blending
     void set_blend(blend_mode bm = blend_mode::none)
@@ -103,7 +103,7 @@ public:
                          static_cast<SDL_RendererFlip>(static_cast<int>(flip_mode))))
         {
             SDL_Log("Orig: %d, %d, %d, %d\n", orig->x, orig->y, orig->w, orig->h);
-            SDL_Log(SDL_GetError());
+            SDL_Log("%s\n", SDL_GetError());
             throw not_well_constructed{};
         }
     }
